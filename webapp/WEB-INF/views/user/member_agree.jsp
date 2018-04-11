@@ -34,7 +34,7 @@
 						alert("이용약관 내용에 동의를 체크해 주십시오.");
 						return;
 					}
-					location.href = "/user/member_join";
+					location.href = "${pageContext.servletContext.contextPath }/user/member_join";
 				}
 			</script>
 
@@ -99,7 +99,7 @@
 												<!-- form2  시작 --->
 												<form name = "form2">
 												<input type="checkbox" name="agree" value="ok">
-												이용약관 내용에 동의하시면 선택해 주십시오.
+													이용약관 내용에 동의하시면 선택해 주십시오.
 												</form>
 												<!-- form2 끝 --->
 											</td>
@@ -116,7 +116,7 @@
 				<tr>
 					<td height="45" align="right">
 						<a href="javascript:CheckAgree()"><img src="${pageContext.servletContext.contextPath }/assets/images/b_agreeok.gif" border="0"></a> 
-						<a href="index.html"><img src="${pageContext.servletContext.contextPath }/assets/images/b_agreeno.gif" border="0"></a>
+						<a href="${pageContext.servletContext.contextPath }"><img src="${pageContext.servletContext.contextPath }/assets/images/b_agreeno.gif" border="0"></a>
 					</td>
 				</tr>
 			</table>
@@ -189,7 +189,6 @@
 		</td>
 	</tr>
 </table>
-<br><br>
-<jsp:include page="/WEB-INF/views/include/footer.jsp"/>
+
 </body>
 </html>

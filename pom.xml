@@ -7,7 +7,7 @@
 	<packaging>war</packaging>	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<org.springframework-version>4.1.1.RELEASE</org.springframework-version>
+		<org.springframework-version>4.2.1.RELEASE</org.springframework-version>
 	</properties>
 
 	<dependencies>
@@ -32,13 +32,67 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
+		
+		<!-- spring jdbc -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<!-- mysql jdbc 드라이버 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.38</version>
+		</dependency>
+		<!-- Common DBCP -->
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+		<!-- MyBatis -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.2.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.2.0</version>
+		</dependency>
+		
 
 		<!-- jstl -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
+		</dependency>
+		
+		<!-- validation -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.0.0.GA</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.2.0.Final</version>
+		</dependency>
+		
+		<!-- jackson ajax하려면 추가해줘야함-->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.1.1</version>
 		</dependency>
 		
 	</dependencies>

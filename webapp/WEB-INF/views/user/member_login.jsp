@@ -53,7 +53,7 @@
 												</table>
 												<table border="0" cellpadding="0" cellspacing="0" width="320">
 													<!-- form2 시작 ------>
-													<form name = "form2" method = "post" action = "/user/member_loginok">
+													<form name = "form2" method = "post" action = "${pageContext.servletContext.contextPath }/user/login">
 													<tr>
 														<td width="220" height="25">
 															<p style="padding-left:10px;">

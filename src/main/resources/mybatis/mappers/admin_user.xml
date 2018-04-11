@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="admin_user">
+
+	<select id="login" parameterType="uservo"
+			resultType="uservo">
+			<![CDATA[
+				select no,id,password,name,birth,tel,phone,
+					zipcode,address,email,reg_date as regDate, auth  
+				from user  
+				where id = #{id} 
+				and password = password(#{password}) 
+				and live = 'y'   
+			]]>
+	</select>
+	
+	<select id="confirm_auth" parameterType="uservo"
+			resultType="long">
+			<![CDATA[
+				select a.no 
+				from user u, admin a   
+				where a.user_no = u.no
+				and a.user_no = #{no}    
+			]]>
+	</select>
+	
+	<select id="select_totalCount" parameterType="map" resultType="long" >
+		<![CDATA[
+			select count(*) 
+			from user 
+			where live = 'y'
+			and auth != '관리자'
+		]]>
+		<if test="option != '' and keyword != ''">
+			<![CDATA[
+				and ${option} like '%${keyword}%'  
+			]]>			
+		</if>
+	</select>
+	
+	<select id="select_list" parameterType="pb" resultType="uservo">
+		<![CDATA[
+			select no, id, name, tel, phone, email, auth
+			from user 
+			where live = 'y'
+			and auth != '관리자' 
+		]]>
+		<if test="option != '' and keyword != ''">
+			<![CDATA[
+				and ${option} like '%${keyword}%' 
+			]]>			
+		</if>
+		<![CDATA[
+			limit #{startCount},#{countList} 
+		]]>
+	</select>
+	
+	<delete id="delete" parameterType="long">
+	<![CDATA[
+		delete from user 
+		where no = #{no}  
+		and live = 'y'
+		and auth = '회원'   
+	]]>
+	</delete>
+	
+</mapper>

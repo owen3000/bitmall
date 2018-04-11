@@ -17,11 +17,16 @@
 	              					<div align='center'> 
 	                					<table width='660' border='0' cellspacing='0' cellpadding='2'>
 	                  						<tr> 
-							                    <td width='100'><font color='#0457A2'>▶ </font><a href='member'><font color='#0457A2'>회원관리</font></a></td>
-							                    <td width='100'><font color='#0457A2'>▶ </font><a href='product'><font color='#0457A2'>상품관리</font></a></td>
-							                    <td width='100'><font color='#0457A2'>▶ </font><a href='jumun'><font color='#0457A2'>주문관리</font></a></td>
-							                    <td width='100'><font color='#0457A2'>▶ </font><a href='opt'><font color='#0457A2'>옵션관리</font></a></td>
-							                    <td width='100'><font color='#0457A2'>▶ </font><a href='faq'><font color='#0457A2'>FAQ관리</font></a></td>
+							                    <td width='100'><font color='#0457A2'>▶ </font>
+							                   <a href='${pageContext.servletContext.contextPath }/admin/member'><font color='#0457A2'>회원관리</font></a></td>
+							                    <td width='100'><font color='#0457A2'>▶ </font>
+							                   <a href='${pageContext.servletContext.contextPath }/admin/product'><font color='#0457A2'>상품관리</font></a></td>
+							                    <td width='100'><font color='#0457A2'>▶ </font>
+							                   <a href='${pageContext.servletContext.contextPath }/admin/jumun'><font color='#0457A2'>주문관리</font></a></td>
+							                    <td width='100'><font color='#0457A2'>▶ </font>
+							                   <a href='${pageContext.servletContext.contextPath }/admin/option'><font color='#0457A2'>옵션관리</font></a></td>
+							                    <td width='100'><font color='#0457A2'>▶ </font>
+							                   <a href='${pageContext.servletContext.contextPath }/admin/faq'><font color='#0457A2'>FAQ관리</font></a></td>
 						                  	</tr>
 	                					</table>
 	              					</div>
