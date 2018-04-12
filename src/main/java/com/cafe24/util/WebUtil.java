@@ -26,6 +26,10 @@ public class WebUtil {
 		System.out.println("num:"+ num);
 		// 밑에서 익셉션 남
 		Long lNum = Long.parseLong(num);*/
+		if("".equals(value)) {
+			return defaultValue;
+		}
+		
 		boolean flag = false; 
 		if(value!=null)
 			flag = java.util.regex.Pattern.matches("^[0-9]*$", value);

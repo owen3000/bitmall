@@ -42,12 +42,12 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 				// @Auth 가 없는 클래스 or 메서드 이므로 그냥 통과 시켜줌!!
 				return true; //통과
 			} else {
-				System.out.println(authMethod.toString());
+				System.out.println("authMethod: "+authMethod.toString());
 	            role = authMethod.toString();
 			}
 		} else { // Class @Auth 달린경우
 			// @Auth 의 role 에서 ADMIN or USER 부분만 추출
-			System.out.println(authClass.toString());
+			System.out.println("authClass: "+authClass.toString());
 	        role = authClass.toString();
 		}
 		//3. 어노테이션이 있는상태. 세션체크해야지

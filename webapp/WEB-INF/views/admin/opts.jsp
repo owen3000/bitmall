@@ -7,6 +7,11 @@
 	<title>쇼핑몰 관리자 홈페이지</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<link href="${pageContext.servletContext.contextPath }/assets/css/font.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery-1.9.0.js">
+</script>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/admin/opt/opts.js">
+</script>
 </head>
 <body bgcolor="white" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <br>
@@ -14,9 +19,9 @@
 <hr width='900' size='3'>
 <table width="450" border="0" cellspacing="0" cellpadding="0">
 	<tr height="50">
-		<td align="left"  width="300" valign="bottom">&nbsp 옵션명 : <font color="#0457A2"><b>사이즈</b></font></td>
+		<td align="left"  width="300" valign="bottom">&nbsp; 옵션명 : <font color="#0457A2"><b>${param.name }</b></font></td>
 		<td align="right" width="200" valign="bottom">
-			<input type="button" value="신규입력" onclick="javascript:go_new();"> &nbsp
+			<input id="btn-new-opts" type="button" value="신규입력" data-name="${param.name }" > &nbsp;
 		</td>
 	</tr>
 	<tr><td height="5" colspan="2"></td></tr>
@@ -28,38 +33,18 @@
 		<td width="300" align="center"><font color="#142712">소옵션명</font></td>
 		<td width="100" align="center"><font color="#142712">수정/삭제</font></td>
 	</tr>
-	<tr bgcolor="#F2F2F2" height="20">	
-		<td width="100" align="center">1</td>
-		<td width="300" align="left">XL</td>
-		<td width="100" align="center">
-			<a href="opts_edit.jsp?no1=1&no2=1">수정</a>/
-			<a href="">삭제</a>
-		</td>
-	</tr>
-	<tr bgcolor="#F2F2F2" height="20">	
-		<td width="100" align="center">2</td>
-		<td width="300" align="left">L</td>
-		<td width="100" align="center">
-			<a href="opts_edit.jsp?no1=1&no2=2">수정</a>/
-			<a href="">삭제</a>
-		</td>
-	</tr>
-	<tr bgcolor="#F2F2F2" height="20">	
-		<td width="100" align="center">3</td>
-		<td width="300" align="left">M</td>
-		<td width="100" align="center">
-			<a href="opts_edit.jsp?no1=1&no2=3">수정</a>/
-			<a href="">삭제</a>
-		</td>
-	</tr>
-	<tr bgcolor="#F2F2F2" height="20">	
-		<td width="100" align="center">4</td>
-		<td width="300" align="left">S</td>
-		<td width="100" align="center">
-			<a href="opts_edit.jsp?no1=1&no2=4">수정</a>/
-			<a href="">삭제</a>
-		</td>
-	</tr>
+	
+	<c:forEach items="${optsList }" var="l" varStatus="status">
+		<tr bgcolor="#F2F2F2" height="20">	
+			<td width="100" align="center">${status.index+1 }</td>
+			<td width="300" align="left">${l.value }</td>
+			<td width="100" align="center">
+				<a href="${pageContext.servletContext.contextPath }/admin/opts_edit?no=${l.no}&name=${param.name }">수정</a>/
+				<a href="${pageContext.servletContext.contextPath }/admin/opts_delete?no=${l.no}&name=${param.name }">삭제</a>
+			</td>
+		</tr>	
+	</c:forEach>
+
 </table>
 </body>
 </html>

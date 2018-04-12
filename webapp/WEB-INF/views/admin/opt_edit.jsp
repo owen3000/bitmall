@@ -12,20 +12,21 @@
 <br>
 <jsp:include page="/WEB-INF/views/include/admin-menu.jsp"/>
 <hr width='900' size='3'>
-<form name="form1" method="post" action="opt_update.html">
+<form name="form1" method="post" action="${pageContext.servletContext.contextPath }/admin/opt_update">
+<input type="hidden" name="select-name" value="${param.name }">
 <table width="500" border="1" cellspacing="0" bordercolordark="white" bordercolorlight="black">
 	<tr> 
 		<td width="100" height="20" bgcolor="#CCCCCC" align="center">
 			<font color="#142712">옵션번호</font>
 		</td>
-		<td width="400" height="20"  bgcolor="#F2F2F2">1</td>
+		<td width="400" height="20"  bgcolor="#F2F2F2">${param.index}</td>
 	</tr>
 	<tr> 
 		<td width="100" height="20" bgcolor="#CCCCCC" align="center">
 			<font color="#142712">옵션명</font>
 		</td>
 		<td width="400" height="20"  bgcolor="#F2F2F2">
-			<input type="text" name="name" value="사이즈" size="20" maxlength="20">
+			<input type="text" name="update-name" value="${param.name }" size="20" maxlength="20">
 		</td>
 	</tr>
 </table>
@@ -33,8 +34,8 @@
 <table width="500" border="0" cellspacing="0" cellpadding="7">
 	<tr> 
 		<td align="center">
-			<input type="submit" value="수 정 하 기"> &nbsp;&nbsp
-			<a href="opt.jsp"><input type="button" value="이 전 화 면"></a>
+			<input type="submit" value="수 정 하 기"> &nbsp;&nbsp;
+			<a href="${pageContext.servletContext.contextPath }/admin/opt"><input type="button" value="이 전 화 면"></a>
 		</td>
 	</tr>
 </table>

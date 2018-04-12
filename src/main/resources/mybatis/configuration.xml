@@ -4,11 +4,13 @@
 	<typeAliases>
 		<typeAlias alias="uservo" type="com.cafe24.bitmall.vo.UserVO"/>
 		<typeAlias alias="pb" type="com.cafe24.util.PagingBean"/>
+		<typeAlias alias="optvo" type="com.cafe24.bitmall.vo.OptVO"/>
 	
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />
 		<mapper resource="mybatis/mappers/admin_user.xml" />
+		<mapper resource="mybatis/mappers/admin_opt.xml" />
 
 
 	</mappers>
