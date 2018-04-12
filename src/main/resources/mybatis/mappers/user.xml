@@ -23,7 +23,7 @@
 		]]>
 	</insert>
 	
-	<select id="selectId" parameterType="string" resultType="string" >
+	<select id="select_id" parameterType="string" resultType="string" >
 		<![CDATA[
 			select id 
 			from user 
@@ -31,4 +31,24 @@
 		]]>
 	</select>
 
+	<select id="select_one" parameterType="long" resultType="uservo">
+		<![CDATA[
+			select u.no, u.id, u.password, u.name, u.birth, u.tel, u.phone,
+				u.zipcode, u.address, u.email, u.reg_date as regDate, u.auth  
+			from user u, admin a   
+			where u.no != a.user_no  
+			and u.live = 'y' 
+			and u.no = #{no} 
+		]]>
+	</select>
+	
+	<update id="update" parameterType="uservo">
+		<![CDATA[
+			update user 
+			set password= password(#{password}), name=#{name}, birth=#{birth},
+			tel=#{tel}, phone=#{phone},zipcode=#{zipcode},address=#{address},
+			email=#{email}  
+			where no = #{no};
+		]]>
+	</update>
 </mapper>

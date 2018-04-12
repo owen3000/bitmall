@@ -64,7 +64,7 @@
 			<td width="200">&nbsp ${l.email }</td>	
 			<td width="100" align="center">${l.auth }</td>	
 			<td width="100" align="center">
-				<a href="#">수정</a>/
+				<label class="member-modify" data-no='${l.no }' >수정</label>
 				<label class="member-delete" data-no='${l.no }' >삭제</label>
 			</td>
 		</tr>		

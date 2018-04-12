@@ -22,6 +22,16 @@ public class UserDAO {
 	}
 	
 	public String select(String id) {
-		return sqlSession.selectOne("user.selectId", id);
+		return sqlSession.selectOne("user.select_id", id);
 	}
+	
+	public UserVO select(Long no) {
+		return sqlSession.selectOne("user.select_one", no);
+	}
+	
+	public boolean update(UserVO vo) {
+		int count = sqlSession.update("user.update", vo);
+		return count == 1;
+	}
+	
 }

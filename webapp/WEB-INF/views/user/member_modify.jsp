@@ -7,6 +7,11 @@
 	<title>비트닷컴 쇼핑몰</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<link href="${pageContext.servletContext.contextPath }/assets/css/font.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery-1.9.0.js">
+</script>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/member/member_modify.js">
+</script>
+
 </head>
 <body style="margin:0">
 <jsp:include page="/WEB-INF/views/include/head.jsp"/>
@@ -40,7 +45,13 @@
 				<tr><td height="10"></td></tr>
 			</table>
 
-			<form name="form2" method="post" action="/user/member_modifying/${authUser.no }">
+			<form id="modify-form" name="form2" method="post" action="${pageContext.servletContext.contextPath }/user/member_modifying">
+
+			<input type="hidden" name="no" value="${authUser.no }">
+			<input id="modify-birth" type="hidden" name="birth" value="${authUser.birth }">
+			<input id="modify-tel" type="hidden" name="tel" value="${authUser.tel }">
+			<input id="modify-phone" type="hidden" name="phone" value="${authUser.phone }">
+			<input id="modify-zipcode" type="hidden" name="zipcode" value="${authUser.zipcode }">
 			<table border="0" cellpadding="5" cellspacing="1" width="685" bgcolor="cccccc">
 				<tr>
 					<td align="center" bgcolor="efefef">
@@ -53,7 +64,7 @@
 												<img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/i_dot.gif" border="0"> <font color="898989"><b>아이디</b></font>
 											</td>
 											<td>
-												<input type="text" name="id" maxlength = "12" value="${vo.id }" size="20" class="cmfont1"> 
+												<input id="modify-id" type="text" name="id" maxlength = "12" value="${authUser.id }" size="20" class="cmfont1" readonly="readonly"> 
 												<a href="javascript:check_id();"><img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/b_idcheck.gif" border="0"></a>
 											</td>
 										</tr>
@@ -62,7 +73,7 @@
 												<img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/i_dot.gif" border="0"> <font color="898989"><b>비밀번호</b></font>
 											</td>
 											<td>
-												<input TYPE="password" name="password1" maxlength = "10" size="20" class="cmfont1">
+												<input id="modify-password1" TYPE="password" name="password" maxlength = "10" size="20" class="cmfont1">
 											</td>
 										</tr>
 										<tr>
@@ -70,7 +81,7 @@
 												<img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/i_dot.gif" border="0"> <font color="898989"><b>비밀번호 확인</b></font>
 											</td>
 											<td>
-												<input TYPE="password" name="password2" maxlength = "10" size="20" class="cmfont1">
+												<input id="modify-password2" TYPE="password" name="password2" maxlength = "10" size="20" class="cmfont1">
 											</td>
 										</tr>
 										<tr><td colspan="2" height="10"></td></tr>
@@ -83,7 +94,7 @@
 												<img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/i_dot.gif" border="0"> <font color="898989"><b>이 름</b></font>
 											</td>
 											<td>
-												<input type="text" name="name" maxlength = "10" value = "${vo.name }" size="20" class="cmfont1">
+												<input id="modify-name" type="text" name="name" maxlength = "10" value = "${authUser.name }" size="20" class="cmfont1">
 											</td>
 										</tr>
 										<tr>
@@ -91,9 +102,9 @@
 												<img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/i_dot.gif" border="0"> <font color="898989"><b>생년월일</b></font>
 											</td>
 											<td>
-												<input type="text" name='birthday1' size = "4" maxlength = "4" value = "${birthday1 }" class="cmfont1"> <font color="898989">년</font> 
-												<input type="text" name='birthday2' size = "2" maxlength = "2" value = "${birthday2 }" class="cmfont1"> <font color="898989">월</font> 
-												<input type="text" name='birthday3' size = "2" maxlength = "2" value = "${birthday3 }" class="cmfont1"> <font color="898989">일</font> 
+												<input id="modify-birth1" type="text" name='birth1' size = "4" maxlength = "4" value = "" class="cmfont1"> <font color="898989">년</font> 
+												<input id="modify-birth2" type="text" name='birth2' size = "2" maxlength = "2" value = "" class="cmfont1"> <font color="898989">월</font> 
+												<input id="modify-birth3" type="text" name='birth3' size = "2" maxlength = "2" value = "" class="cmfont1"> <font color="898989">일</font> 
 												<!-- <input type="radio" name='sm' value = "1" checked> <font color="898989">양력</font> 
 												<input type="radio" name='sm' value = "2" > <font color="898989">음력</font></td> -->
 										</tr>
@@ -107,9 +118,9 @@
 												<img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/i_dot.gif" border="0"> <font color="898989"><b>전화 번호</b></font>
 											</td>
 											<td>
-												<input type="text" name='tel1' size = "4" maxlength = "4" value = "${tel1 }" class="cmfont1"><font color="898989">-</font>
-												<input type="text" name='tel2' size = "4" maxlength = "4" value = "${tel2 }" class="cmfont1"><font color="898989">-</font>
-												<input type="text" name='tel3' size = "4" maxlength = "4" value = "${tel3 }" class="cmfont1">
+												<input id="modify-tel1" type="text" name='tel1' size = "4" maxlength = "4" value = "" class="cmfont1"><font color="898989">-</font>
+												<input id="modify-tel2" type="text" name='tel2' size = "4" maxlength = "4" value = "" class="cmfont1"><font color="898989">-</font>
+												<input id="modify-tel3" type="text" name='tel3' size = "4" maxlength = "4" value = "" class="cmfont1">
 											</td>
 										</tr>
 										<tr>
@@ -117,9 +128,9 @@
 												<img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/i_dot.gif" border="0"> <font color="898989"><b>핸드폰 번호</b></font>
 											</td>
 											<td>
-												<input type="text" name='phone1' size = "4" maxlength = "4" value = "${phone1 }" class="cmfont1"><font color="898989">-</font>
-												<input type="text" name='phone2' size = "4" maxlength = "4" value = "${phone2 }" class="cmfont1"><font color="898989">-</font>
-												<input type="text" name='phone3' size = "4" maxlength = "4" value = "${phone3 }" class="cmfont1">
+												<input id="modify-phone1" type="text" name='phone1' size = "4" maxlength = "4" value = "" class="cmfont1"><font color="898989">-</font>
+												<input id="modify-phone2" type="text" name='phone2' size = "4" maxlength = "4" value = "" class="cmfont1"><font color="898989">-</font>
+												<input id="modify-phone3" type="text" name='phone3' size = "4" maxlength = "4" value = "" class="cmfont1">
 											</td>
 										</tr>
 										<tr>
@@ -127,10 +138,10 @@
 												<img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/i_dot.gif" border="0"> <font color="898989"><b>주 소</b></font>
 											</td>
 											<td>
-												<input type="text" name='zip1' size = "4" maxlength = "3" value = "762" class="cmfont1"><font color="898989">-</font>
-												<input type="text" name='zip2' size = "4" maxlength = "3" value = "634" class="cmfont1"> 
+												<input id="modify-zip1" type="text" name='zip1' size = "4" maxlength = "3" value = "" class="cmfont1"><font color="898989">-</font>
+												<input id="modify-zip2" type="text" name='zip2' size = "4" maxlength = "3" value = "" class="cmfont1"> 
 												<a href="javascript:FindZip(0)"><img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/b_zip.gif" border="0"></a><br>
-												<input type="text" name='address' size = "50" maxlength = "200" value = "${vo.address }" class="cmfont1"><br>
+												<input type="text" name='address' size = "50" maxlength = "200" value = "${authUser.address }" class="cmfont1"><br>
 											</td>
 										</tr>
 										<tr>
@@ -138,7 +149,7 @@
 												<img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/i_dot.gif" border="0"> <font color="898989"><b>E-Mail</b></font>
 											</td>
 											<td>
-												<input type="text" name='email' size = "50" maxlength = "50" value = "${vo.email }" class="cmfont1">
+												<input id="modify-email" type="text" name='email' size = "50" maxlength = "50" value = "${authUser.email }" class="cmfont1">
 											</td>
 										</tr>
 									</table>

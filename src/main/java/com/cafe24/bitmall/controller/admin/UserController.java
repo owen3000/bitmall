@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cafe24.bitmall.service.admin.UserService;
 import com.cafe24.bitmall.vo.UserVO;
+import com.cafe24.interceptor.Auth;
+import com.cafe24.interceptor.Auth.Role;
 import com.cafe24.util.PagingBean;
 import com.cafe24.util.WebUtil;
 
@@ -28,6 +30,7 @@ public class UserController {
 		return "admin/login";
 	}
 	
+	@Auth(role= Role.ADMIN)
 	@RequestMapping(value= {"/member"})
 	public String member(Model model, 
 			@RequestParam(value="nowPage",required=true,defaultValue="1") String nowPage,

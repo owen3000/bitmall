@@ -31,7 +31,6 @@ $(function(){
 					console.log("success");
 					$(".member-delete:eq("+element+")").parent().parent().remove();
 					var totalCount = $("#member-totalCount").text();
-					console.log(totalCount);
 					$("#member-totalCount").text(totalCount-1);
 					return;
 				}

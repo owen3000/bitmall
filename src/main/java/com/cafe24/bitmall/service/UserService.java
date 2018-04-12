@@ -27,6 +27,14 @@ public class UserService {
 		return true;
 	}
 	
+	public UserVO get(Long no) {
+		return userDAO.select(no);
+	}
+	
+	public boolean update(UserVO vo) {
+		return userDAO.update(vo);
+	}
+	
 	/*public void joinUser(UserVO vo) {
 		UserVO uvo = userDAO.insert(vo);
 		BlogVO bvo = new BlogVO();

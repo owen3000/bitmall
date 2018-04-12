@@ -13,7 +13,7 @@ public class ProductController {
 		return "admin/product";
 	}
 	
-	@RequestMapping(value= {"/product/new"})
+	@RequestMapping(value= {"/product_new"})
 	public String productNew() {
 		
 		return "admin/product_new";

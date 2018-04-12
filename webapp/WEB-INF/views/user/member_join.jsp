@@ -72,7 +72,7 @@
 												<img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/i_dot.gif" border="0"> <font color="898989"><b>비밀번호</b></font>
 											</td>
 											<td>
-												<input id="join-password" TYPE="password" name="password" maxlength = "10" size="20" class="cmfont1">
+												<input id="join-password1" TYPE="password" name="password" maxlength = "10" size="20" class="cmfont1">
 											</td>
 										</tr>
 										<tr>
@@ -101,9 +101,9 @@
 												<img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/i_dot.gif" border="0"> <font color="898989"><b>생년월일</b></font>
 											</td>
 											<td>
-												<input id="join-year" type="text" name='year' size = "4" maxlength = "4" value = "" class="cmfont1"> <font color="898989">년</font> 
-												<input id="join-month" type="text" name='month' size = "2" maxlength = "2" value = "" class="cmfont1"> <font color="898989">월</font> 
-												<input id="join-day" type="text" name='day' size = "2" maxlength = "2" value = "" class="cmfont1"> <font color="898989">일</font> 
+												<input id="join-birth1" type="text" name='birth1' size = "4" maxlength = "4" value = "" class="cmfont1"> <font color="898989">년</font> 
+												<input id="join-birth2" type="text" name='birth2' size = "2" maxlength = "2" value = "" class="cmfont1"> <font color="898989">월</font> 
+												<input id="join-birth3" type="text" name='birth3' size = "2" maxlength = "2" value = "" class="cmfont1"> <font color="898989">일</font> 
 												<!-- <input type="radio" name='sm' value = "1" checked> <font color="898989">양력</font> 
 												<input type="radio" name='sm' value = "2" > <font color="898989">음력</font></td> -->
 										</tr>
