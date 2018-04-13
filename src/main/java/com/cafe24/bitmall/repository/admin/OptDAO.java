@@ -57,4 +57,10 @@ public class OptDAO {
 		return count == 1;
 	}
 	
+	// 상품옵션 테이블 insert
+	public boolean insert(Map<String, Long> map) {
+		int count = sqlSession.insert("admin_opt.insert_product_opt",map);
+		return count == 1;
+	}
+	
 }

@@ -7,20 +7,30 @@
 	<title>쇼핑몰 관리자 홈페이지</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<link href="${pageContext.servletContext.contextPath }/assets/css/font.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery-1.9.0.js">
+</script>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/admin/product/product_new.js">
+</script>
+<style type="text/css">
+#product-discount{text-align: right; padding-right: 4px;}
+</style>
 </head>
 <body bgcolor="white" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <br>
 <jsp:include page="/WEB-INF/views/include/admin-menu.jsp"/>
 <hr width='900' size='3'>
+<form action="${pageContext.servletContext.contextPath}/admin/product_new" 
+	enctype="multipart/form-data" method="post">
 <table width="800" border="1" cellspacing="0" cellpadding="3" bordercolordark="white" bordercolorlight="black">
 	<tr height="23"> 
 		<td width="100" bgcolor="#CCCCCC" align="center">상품분류</td>
     <td width="700" bgcolor="#F2F2F2">
-			<select name="menu">
+			<select name="category">
 				<option value="0" selected>상품분류를 선택하세요</option>
-				<option value="1">금팔찌</option>
-				<option value="2">은팔찌</option>
-				<option value="3">기타팔찌</option>
+				<c:forEach	items="${categoryList }" var="l" varStatus="status">
+					<option value="${l.no }">${l.name }</option>
+				</c:forEach>
 			</select>
 		</td>
 	</tr>
@@ -39,7 +49,7 @@
 	<tr> 
 		<td width="100" bgcolor="#CCCCCC" align="center">제조사</td>
 		<td width="700" bgcolor="#F2F2F2">
-			<input type="text" name="coname" value="" size="30" maxlength="30">
+			<input type="text" name="manufacturer" value="" size="30" maxlength="30">
 		</td>
 	</tr>
 	<tr> 
@@ -51,50 +61,45 @@
 	<tr> 
 		<td width="100" bgcolor="#CCCCCC" align="center">옵션</td>
     <td width="700" bgcolor="#F2F2F2">
-			<select name="opt1">
-				<option value="0" selected>옵션선택</option>
-				<option value="1">사이즈</option>
-				<option value="2">색상_WB</option>
-				<option value="3">색상_WR</option>
-			</select> &nbsp; &nbsp; 
-
-			<select name="opt2">
-				<option value="0" selected>옵션선택</option>
-				<option value="1">사이즈</option>
-				<option value="2">색상_WB</option>
-				<option value="3">색상_WR</option>
-			</select> &nbsp; &nbsp; 
+				<c:forEach items="${optList }" var="l" varStatus="status">
+					<input type="checkbox" name="opt" value="${l.no }">
+					${l.name }&nbsp;
+				</c:forEach>
+			&nbsp; &nbsp; 
+			
+			
+			 &nbsp; &nbsp; 
 		</td>
 	</tr>
 	<tr> 
 		<td width="100" bgcolor="#CCCCCC" align="center">제품설명</td>
 		<td width="700" bgcolor="#F2F2F2">
-			<textarea name="content" rows="10" cols="80"></textarea>
+			<textarea name="description" rows="10" cols="80"></textarea>
 		</td>
 	</tr>
 	<tr> 
 		<td width="100" bgcolor="#CCCCCC" align="center">상품상태</td>
     <td width="700" bgcolor="#F2F2F2">
-			<input type="radio" name="status" value="1" checked> 판매중
-			<input type="radio" name="status" value="2"> 판매중지
-			<input type="radio" name="status" value="3"> 품절
+    	<c:forEach items="${salesStatusList }" var="l" varStatus="status">
+    		<input type="radio" name="status" value="${l.no }"> ${l.status }&nbsp;
+    	</c:forEach>
 		</td>
 	</tr>
 	<tr> 
 		<td width="100" bgcolor="#CCCCCC" align="center">아이콘</td>
 		<td width="700" bgcolor="#F2F2F2">
-			<input type="checkbox" name="icon_new" value="1"> New &nbsp;&nbsp	
-			<input type="checkbox" name="icon_hit" value="1"> Hit &nbsp;&nbsp	
-			<input type="checkbox" name="icon_sale" value="1" onclick="form1.discount.disabled=!form1.discount.disabled;"> Sale &nbsp;&nbsp
-			할인율 : <input type="text" name="discount" value="0" size="3" maxlength="3" disabled> %
+			<c:forEach items="${eventList }" var="l" varStatus="status">
+				<input class="checkbox-event" type="checkbox" name="event" value="${l.no }" data-rate=${l.rate }> ${l.title } &nbsp;&nbsp;	
+			</c:forEach>
+			할인율 : <input id="product-discount" type="text" name="discount" value="0" size="3" maxlength="3" readonly="readonly"> %
 		</td>
 	</tr>
 	<tr> 
 		<td width="100" bgcolor="#CCCCCC" align="center">이미지</td>
 		<td width="700" bgcolor="#F2F2F2">
-			<b>이미지1</b>: <input type="file" name="file1" size="30" value="찾아보기"><br>
-			<b>이미지2</b>: <input type="file" name="file2" size="30" value="찾아보기"><br>
-			<b>이미지3</b>: <input type="file" name="file3" size="30" value="찾아보기"><br>
+			<b>이미지1</b>: <input type="file" name="file" size="30" value="찾아보기"><br>
+			<b>이미지2</b>: <input type="file" name="file" size="30" value="찾아보기"><br>
+			<b>이미지3</b>: <input type="file" name="file" size="30" value="찾아보기"><br>
 		</td>
 	</tr>
 </table>

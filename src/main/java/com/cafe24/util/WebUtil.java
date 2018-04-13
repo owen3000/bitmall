@@ -52,7 +52,7 @@ public class WebUtil {
 		rd.forward(request, response);
 	}
 	
-	public static boolean CheckBindingResult(BindingResult result) {
+	public static boolean checkBindingResult(BindingResult result) {
 		boolean flag = false;
 		if(result.hasErrors()) {
 			//에러출력
@@ -62,5 +62,17 @@ public class WebUtil {
 			flag = true;
 		}
 		return flag;
+	}
+	
+	public static <T> boolean checkListEmptyOrNull(List<T> list, String message) {
+		if( list == null  ) {
+			System.out.println( message );
+			return true;
+		}
+		if( list.isEmpty() ) {
+			System.out.println( message );
+			return true;
+		}
+		return false;
 	}
 }

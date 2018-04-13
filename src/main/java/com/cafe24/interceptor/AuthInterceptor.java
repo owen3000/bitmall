@@ -47,7 +47,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			}
 		} else { // Class @Auth 달린경우
 			// @Auth 의 role 에서 ADMIN or USER 부분만 추출
-			System.out.println("authClass: "+authClass.toString());
+			//System.out.println("authClass: "+authClass.toString());
 	        role = authClass.toString();
 		}
 		//3. 어노테이션이 있는상태. 세션체크해야지
@@ -84,7 +84,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 		
-		System.out.println("postHandle");
+		//System.out.println("postHandle");
 		HandlerMethod hm = (HandlerMethod) handler;
 		
 		// modifying 메서드 일 경우.

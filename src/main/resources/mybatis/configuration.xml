@@ -5,12 +5,22 @@
 		<typeAlias alias="uservo" type="com.cafe24.bitmall.vo.UserVO"/>
 		<typeAlias alias="pb" type="com.cafe24.util.PagingBean"/>
 		<typeAlias alias="optvo" type="com.cafe24.bitmall.vo.OptVO"/>
+		<typeAlias alias="categoryvo" type="com.cafe24.bitmall.vo.CategoryVO"/>
+		<typeAlias alias="salesstatusvo" type="com.cafe24.bitmall.vo.SalesStatusVO"/>
+		<typeAlias alias="eventvo" type="com.cafe24.bitmall.vo.EventVO"/>
+		<typeAlias alias="productvo" type="com.cafe24.bitmall.vo.ProductVO"/>
+		<typeAlias alias="imagevo" type="com.cafe24.bitmall.vo.ImageVO"/>
 	
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />
 		<mapper resource="mybatis/mappers/admin_user.xml" />
 		<mapper resource="mybatis/mappers/admin_opt.xml" />
+		<mapper resource="mybatis/mappers/admin_category.xml" />
+		<mapper resource="mybatis/mappers/admin_sales_status.xml" />
+		<mapper resource="mybatis/mappers/admin_event.xml" />
+		<mapper resource="mybatis/mappers/admin_product.xml" />
+		<mapper resource="mybatis/mappers/admin_image.xml" />
 
 
 	</mappers>
