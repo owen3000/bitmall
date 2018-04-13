@@ -35,17 +35,6 @@ public class UserService {
 		return userDAO.update(vo);
 	}
 	
-	/*public void joinUser(UserVO vo) {
-		UserVO uvo = userDAO.insert(vo);
-		BlogVO bvo = new BlogVO();
-		bvo.setNo(uvo.getNo());
-		bvo.setTitle("My Blog");
-		CategoryVO cvo = new CategoryVO();
-		cvo.setBlogNo(bvo.getNo());
-		cvo.setCategory("미분류");
-		cvo.setDescription("카테고리를 지정하지 않은경우");
-		blogDAO.insert(bvo);
-		categoryDAO.insert(cvo);
-	}*/
+	
 
 }

@@ -26,7 +26,7 @@ public class FileUploadService {
 			originFilename.substring(originFilename.lastIndexOf("."),
 										originFilename.length());
 			// size
-			long size = multipartFile.getSize();
+			//long size = multipartFile.getSize();
 			//저장할 이름
 			String saveFilename = getSaveFilename(extName);
 			writeFile(multipartFile,saveFilename);

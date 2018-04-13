@@ -2,15 +2,19 @@ package com.cafe24.bitmall.controller.admin;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cafe24.bitmall.service.admin.CategoryService;
 import com.cafe24.bitmall.service.admin.EventService;
@@ -53,8 +57,14 @@ public class ProductController {
 		return "admin/product";
 	}
 	
-	@RequestMapping(value= {"/product_new"})
+	@RequestMapping(value= {"/product_new"},method=RequestMethod.GET)
 	public String productNew(Model model) {
+		
+		// 와... 드이어 해결...
+		//System.out.println(model.containsAttribute("productVO"));// true
+		if(!model.containsAttribute("productVO")) {
+			model.addAttribute("productVO", new ProductVO());
+		}
 		
 		List<CategoryVO> cList = categoryService.getList();
 		if( WebUtil.checkListEmptyOrNull(cList, "[ProductController:productNew] cList ") )
@@ -71,7 +81,7 @@ public class ProductController {
 		List<EventVO> eList = eventService.getList();
 		if( WebUtil.checkListEmptyOrNull(eList, "[ProductController:productNew] eList ") )
 			return "redirect:/admin/opt";
-		
+
 		model.addAttribute("categoryList", cList);
 		model.addAttribute("optList", oList);
 		model.addAttribute("salesStatusList", sList);
@@ -81,6 +91,27 @@ public class ProductController {
 	
 	@RequestMapping(value= {"/product_new"},method=RequestMethod.POST)
 	public String productNew(@RequestParam(value="file") MultipartFile[] mpf,
+			@ModelAttribute("productVO") @Valid ProductVO productVO, BindingResult result,
+			@RequestParam(value="opt",required=true,defaultValue="none")String[] opt,
+			@RequestParam(value="event",required=true,defaultValue="none")String[] event,
+			@RequestParam(value="discount",required=true,defaultValue="0")String discount,
+			RedirectAttributes reattr) {
+		System.out.println(productVO);
+		// vo 값 @vaild
+		if( result.hasErrors() ) {
+			System.out.println("[ProductController:productNew] BindingResult error!");
+			reattr.addFlashAttribute("org.springframework.validation.BindingResult.productVO", result);
+			reattr.addFlashAttribute("productVO", productVO);
+			return "redirect:/admin/product_new";
+		} 
+		
+		//상품 insert
+		productService.insert(productVO,event,mpf,opt);
+			
+		return "redirect:/admin/product";
+	}
+/*	@RequestMapping(value= {"/product_new"},method=RequestMethod.POST)
+	public String productNew(@RequestParam(value="file") MultipartFile[] mpf,
 			@RequestParam(value="category",required=true,defaultValue="")String category,
 			@ModelAttribute ProductVO pvo, 
 			@RequestParam(value="opt",required=true,defaultValue="none")String[] opt,
@@ -89,19 +120,19 @@ public class ProductController {
 			@RequestParam(value="discount",required=true,defaultValue="0")String discount) {
 
 		// vo 값 @vaild
-		/*if( result.hasErrors() ) {
+		if( result.hasErrors() ) {
 			System.out.println("[ProductController:productNew] BindingResult error!");
 			return "redirect:/admin/product_new";
-		}*/ 
+		} 
 		
-		if( "0".equals(category) ) {
+		if( "0".equals(category.trim()) ) {
 			System.out.println("[ProductController:productNew] 상품 카테고리 미지정!");
 			return "redirect:/admin/product_new";
 		}
 		
 		
-		Long lCategoryNo = WebUtil.checkParameter(category, -1L);
-		Long lStatus = WebUtil.checkParameter(status, -1L);
+		Long lCategoryNo = WebUtil.checkParameter(category.trim(), -1L);
+		Long lStatus = WebUtil.checkParameter(status.trim(), -1L);
 
 		if( lCategoryNo == -1L || lStatus == -1L ) {
 			System.out.println("[ProductController:productNew] 카테고리,판매상태 번호 -1L !");
@@ -114,23 +145,7 @@ public class ProductController {
 		productService.insert(pvo,event,mpf,opt);
 			
 		return "redirect:/admin/product";
-	}
-	
-/*	public boolean updateBlog(MultipartFile mf, String title, String url,long no) {
-		String originFilename = "";
-		String saveFilename = "";
-		BlogVO vo = new BlogVO();
-		vo.setNo(no);
-		vo.setTitle(title);
-		if( mf != null) {
-			originFilename  = mf.getOriginalFilename();
-			vo.setOriginalName(originFilename);
-		}
-		if( !("".equals(url)) ) {
-			saveFilename = 
-					url.substring(url.lastIndexOf("/")+1,url.length());
-			vo.setSaveName(saveFilename);
-		}
-		return blogDAO.update(vo);
 	}*/
+	
+
 }

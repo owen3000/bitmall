@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cafe24.bitmall.repository.admin.OptDAO;
 import com.cafe24.bitmall.vo.OptVO;
@@ -19,6 +20,7 @@ public class OptService {
 		return optDAO.insert(name);
 	}
 	
+	@Transactional
 	public boolean insertOpts(OptVO vo) {
 		OptVO check = optDAO.select(vo);
 		

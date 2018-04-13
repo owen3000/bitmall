@@ -1,12 +1,19 @@
 package com.cafe24.bitmall.vo;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class ProductVO {
 
 	private long no;
+	@NotBlank
 	private String code;
+	@NotEmpty 
 	private String name;
+	@NotEmpty
 	private String manufacturer;
 	private long price;
+	@NotEmpty
 	private String description;
 	private long categoryNo;
 	private long salesStatusNo;

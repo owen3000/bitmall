@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cafe24.bitmall.repository.admin.ImageDAO;
@@ -30,6 +31,7 @@ public class ProductService {
 	@Autowired
 	private FileUploadService fileUploadService;
 
+	@Transactional
 	public boolean insert(ProductVO pvo, String[] event, MultipartFile[] mpf, String[] opt) {
 		// product insert
 		if( !productDAO.insert(pvo) ) {
@@ -42,7 +44,7 @@ public class ProductService {
 			for (int i = 0; i < event.length; i++) {
 				Map<String, Long> map = new HashMap<String,Long>();
 				map.put("productNo", pvo.getNo());
-				Long eventNo = WebUtil.checkParameter(event[i], -1L);
+				Long eventNo = WebUtil.checkParameter(event[i].trim(), -1L);
 				if( eventNo == -1L ) {
 					System.out.println("[ProductService:insert] if( eventNo == -1L )");
 					break;
@@ -58,7 +60,7 @@ public class ProductService {
 			for (int i = 0; i < opt.length; i++) {
 				Map<String, Long> map = new HashMap<String,Long>();
 				map.put("productNo", pvo.getNo());
-				Long optNo = WebUtil.checkParameter(opt[i], -1L);
+				Long optNo = WebUtil.checkParameter(opt[i].trim(), -1L);
 				if( optNo == -1L ) {
 					System.out.println("[ProductService:insert] if( optNo == -1L )");
 					break;
@@ -82,8 +84,8 @@ public class ProductService {
 							url.substring(url.lastIndexOf("/")+1,url.length());
 				}
 				ImageVO ivo = new ImageVO();
-				ivo.setOriginalName(originFilename);
-				ivo.setSaveName(saveFilename);
+				ivo.setOriginalName(originFilename.trim());
+				ivo.setSaveName(saveFilename.trim());
 				ivo.setProductNo(pvo.getNo());
 				if( !imageDAO.insert(ivo) ) 
 					System.out.println("[ProductService:insert] if( !imageDAO.insert(ivo) ) ");
@@ -92,22 +94,5 @@ public class ProductService {
 
 		return true;
 	}
-	
-	/*	public boolean updateBlog(MultipartFile mf, String title, String url,long no) {
-	String originFilename = "";
-	String saveFilename = "";
-	BlogVO vo = new BlogVO();
-	vo.setNo(no);
-	vo.setTitle(title);
-	if( mf != null) {
-		originFilename  = mf.getOriginalFilename();
-		vo.setOriginalName(originFilename);
-	}
-	if( !("".equals(url)) ) {
-		saveFilename = 
-				url.substring(url.lastIndexOf("/")+1,url.length());
-		vo.setSaveName(saveFilename);
-	}
-	return blogDAO.update(vo);
-}*/
+
 }
