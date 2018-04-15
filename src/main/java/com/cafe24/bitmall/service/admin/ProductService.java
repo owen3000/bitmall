@@ -1,6 +1,7 @@
 package com.cafe24.bitmall.service.admin;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import com.cafe24.bitmall.repository.admin.ProductDAO;
 import com.cafe24.bitmall.service.FileUploadService;
 import com.cafe24.bitmall.vo.ImageVO;
 import com.cafe24.bitmall.vo.ProductVO;
+import com.cafe24.util.PagingBean;
 import com.cafe24.util.WebUtil;
 
 @Service("adminProductService")
@@ -93,6 +95,16 @@ public class ProductService {
 		}
 
 		return true;
+	}
+	
+	public List<HashMap<String, String>> getList(PagingBean pb ){
+
+		return productDAO.select(pb);
+	}
+	
+	public Long getTotalCount(Map<String, String> opts) {
+		
+		return productDAO.select(opts);
 	}
 
 }

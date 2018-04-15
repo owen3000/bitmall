@@ -1,5 +1,8 @@
 package com.cafe24.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class PagingBean {
 
 	private long totalCount;
@@ -9,8 +12,18 @@ public class PagingBean {
 	private long page;
 	private String keyword;
 	private String option;
+	private Map<String, String> opt = new HashMap<String,String>();
 	
-	
+	public Map<String, String> getOpt() {
+		return opt;
+	}
+
+
+	public void setOpt(Map<String, String> opt) {
+		this.opt = opt;
+	}
+
+
 	public String getOption() {
 		return option;
 	}
@@ -62,6 +75,17 @@ public class PagingBean {
 		this.countPage = countPage;
 		this.keyword = keyword;
 		this.option = option;
+	}
+
+
+	public PagingBean(long totalCount, long nowPage, int countList, int countPage,
+			Map<String, String> opt) {
+		super();
+		this.totalCount = totalCount;
+		this.nowPage = nowPage;
+		this.countList = countList;
+		this.countPage = countPage;
+		this.opt = opt;
 	}
 
 
@@ -176,9 +200,12 @@ public class PagingBean {
 	@Override
 	public String toString() {
 		return "PagingBean [totalCount=" + totalCount + ", nowPage=" + nowPage + ", countList=" + countList
-				+ ", countPage=" + countPage + ", page=" + page + ", keyword=" + keyword + ", option=" + option + "]";
+				+ ", countPage=" + countPage + ", page=" + page + ", keyword=" + keyword + ", option=" + option
+				+ ", opt=" + opt + "]";
 	}
 
+
+	
 
 	
 	

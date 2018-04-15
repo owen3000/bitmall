@@ -7,39 +7,46 @@
 	<title>쇼핑몰 관리자 홈페이지</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<link href="${pageContext.servletContext.contextPath }/assets/css/font.css" rel="stylesheet" type="text/css">
+	
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery-1.9.0.js">
+</script>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/admin/product/product.js">
+</script>	
+	
 </head>
 <body bgcolor="white" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <br>
 <jsp:include page="/WEB-INF/views/include/admin-menu.jsp"/>
 <hr width='900' size='3'>
-<form name="form1" method="get" action="">
+<form id="product-search" method="post" action="${pageContext.servletContext.contextPath }/admin/product">
+<input id="nowPage" type="hidden" name="nowPage" value="${pb.nowPage }">
 <table width="800" border="0" cellspacing="0" cellpadding="0">
 	<tr height="40">
-		<td align="left"  width="150" valign="bottom">&nbsp 제품수 : <font color="#FF0000">20</font></td>
+		<td align="left"  width="150" valign="bottom">&nbsp; 제품수 : <font color="#FF0000">${totalCount }</font></td>
 		<td align="right" width="550" valign="bottom">
-			<select name="sel1">
-				<option value="0" >상품상태</option>
-				<option value="1" >판매중</option>
-				<option value="2" >판매중지</option>
-				<option value="3" >품절</option>
+			<select name="status">
+				<option value="" >상품상태</option>
+				<c:forEach items="${readLists.salesStatusList }" var="l" varStatus="status">
+					<option value="${l.no }" >${l.status }</option>	
+				</c:forEach>
+			</select> &nbsp;
+			<select name="event">
+				<option value="" >아이콘선택</option>
+				<c:forEach items="${readLists.eventList }" var="l" varStatus="status">
+					<option value="${l.no }" >${l.title }</option>
+				</c:forEach>
+			</select> &nbsp; 
+			<select name="category">
+				<option value="" >분류선택</option>
+				<c:forEach items="${readLists.categoryList }" var="l" varStatus="status">
+					<option value="${l.no }" >${l.name }</option>
+				</c:forEach>
 			</select> &nbsp 
-			<select name="sel2">
-				<option value="0" >아이콘선택</option>
-				<option value="1" >New</option>
-				<option value="2" >Hit</option>
-				<option value="3" >Sale</option>
-			</select> &nbsp 
-			<select name="sel3">
-				<option value="0" >분류선택</option>
-				<option value="1" >바지</option>
-				<option value="2" >코트</option>
-				<option value="3" >브라우스</option>
-			</select> &nbsp 
-			<select name="sel4">
-				<option value="1" selected>제품이름</option>
-				<option value="2" >제품번호</option>
+			<select name="option">
+				<option value="name" selected>제품이름</option>
+				<option value="code" >제품번호</option>
 			</select>
-			<input type="text" name="text1" size="10" value="">&nbsp
+			<input type="text" name="keyword" size="10" value="">&nbsp;
 		</td>
 		<td align="left" width="120" valign="bottom">
 			<input type="submit" value="검색">
@@ -62,41 +69,53 @@
 		<td width="80"  align="center">수정/삭제</td>
 	</tr>
 	
-	<tr bgcolor="#F2F2F2" height="23">	
-		<td width="100">&nbsp 코트</td>
-		<td width="100">&nbsp Coat001</td>
-		<td width="280">&nbsp 비싼 코트</td>	
-		<td width="70"  align="right">4,500,000 &nbsp</td>	
-		<td width="50"  align="center">판매중</td>	
-		<td width="120" align="center">&nbsp New Hit Sale(10%)</td>	
-		<td width="80"  align="center">
-			<a href="product_edit.jsp">수정</a>/
-			<a href="#">삭제</a>
-		</td>
-	</tr>
-	<tr bgcolor="#F2F2F2" height="23">	
-		<td width="100">&nbsp 코트</td>
-		<td width="100">&nbsp Coat001</td>
-		<td width="280">&nbsp 비싼 코트</td>	
-		<td width="70"  align="right">4,500,000 &nbsp</td>	
-		<td width="50"  align="center">판매중</td>	
-		<td width="120" align="center">&nbsp New Hit Sale(10%)</td>	
-		<td width="80"  align="center">
-			<a href="product_edit.jsp">수정</a>/
-			<a href="#">삭제</a>
-		</td>
-	</tr>	
+	<c:forEach items="${productList }" var="l" varStatus="status">
+		<tr bgcolor="#F2F2F2" height="23">	
+			<td width="100">&nbsp ${l.categoryName }</td>
+			<td width="100">&nbsp ${l.code }</td>
+			<td width="280">&nbsp ${l.name }</td>	
+			<td width="70"  align="right">${l.price } &nbsp</td>	
+			<td width="50"  align="center">${l.status }</td>	
+			<td width="120" align="center">
+			&nbsp ${fn:replace(l.eventTitle,"/",", ") }
+			</td>	
+			<td width="80"  align="center">
+				<a href="product_edit.jsp">수정</a>/
+				<a href="#">삭제</a>
+			</td>
+		</tr>	
+	</c:forEach>
 </table>
 
 <br>
 <table width="800" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td height="30" class="cmfont" align="center">
-			<img src="${pageContext.servletContext.contextPath }/assets/images/admin/i_prev.gif" align="absmiddle" border="0"> 
-			<font color="#FC0504"><b>1</b></font>&nbsp;
-			<a href="product.jsp?page=2&sel1=&sel2=&sel3=&sel4=&text1="><font color="#7C7A77">[2]</font></a>&nbsp;
-			<a href="product.jsp?page=3&sel1=&sel2=&sel3=&sel4=&text1="><font color="#7C7A77">[3]</font></a>&nbsp;
-			<img src="${pageContext.servletContext.contextPath }/assets/images/admin/i_next.gif" align="absmiddle" border="0">
+		
+			<c:if test="${pb.previousPageGroup }">
+				<a href="${pageContext.servletContext.contextPath }/admin/product?nowPage=${pb.startPage-1}&option=${pb.opt.option}&keyword=${pb.opt.keyword}&status=${pb.opt.status}&event=${pb.opt.event}&category=${pb.opt.category}">
+					<img src="${pageContext.servletContext.contextPath }/assets/images/admin/i_prev.gif" align="absmiddle" border="0">
+				</a>&nbsp;
+			</c:if>
+			
+			<c:forEach var="i" begin="${pb.startPage }" end="${pb.endPage }">
+				<c:choose>
+					<c:when test="${pb.nowPage eq i }">
+						<font color="#FC0504"><b>${i }</b></font>&nbsp;
+					</c:when>
+					<c:when test="${pb.nowPage ne i }">
+						<a href="${pageContext.servletContext.contextPath }/admin/product?nowPage=${i}&option=${pb.opt.option}&keyword=${pb.opt.keyword}&status=${pb.opt.status}&event=${pb.opt.event}&category=${pb.opt.category}">
+						<font color="#7C7A77">[${i }]</font></a>&nbsp;
+					</c:when>
+				</c:choose>
+			</c:forEach>	
+					
+			<c:if test="${pb.nextPageGroup }">
+				<a href="${pageContext.servletContext.contextPath }/admin/product?nowPage=${pb.endPage+1}&option=${pb.opt.option}&keyword=${pb.opt.keyword}&status=${pb.opt.status}&event=${pb.opt.event}&category=${pb.opt.category}">
+					<img src="${pageContext.servletContext.contextPath }/assets/images/admin/i_next.gif" align="absmiddle" border="0">
+				</a>&nbsp;
+			</c:if>
+		
 		</td>
 	</tr>
 </table>

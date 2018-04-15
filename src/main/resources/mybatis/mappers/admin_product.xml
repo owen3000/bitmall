@@ -22,4 +22,81 @@
 		values(#{productNo},#{eventNo})  
 	]]>
 	</insert>
+	
+	<select id="select_product_list" parameterType="pb" resultType="java.util.HashMap">
+	<![CDATA[
+	select p.no, p.code, p.name, p.manufacturer, p.price, p.description,
+   			 p.category_no as categoryNo, p.sales_status_no as salesStatusNo, e.no, 
+  	 		 group_concat(e.title separator '/') as eventTitle, 
+ 	   		group_concat(e.rate separator '/') as eventRate, ss.status, c.name as categoryName 
+	from product p, product_event pe, sales_status ss, category c, event e 
+	where p.sales_status_no = ss.no 
+	and p.no = pe.product_no
+    and pe.event_no = e.no 
+	and p.category_no = c.no 
+    and p.live = 'y' 
+    
+    
+	]]>
+		<if test="opt.status != '' ">
+			<![CDATA[
+				and p.sales_status_no = ${opt.status}   
+			]]>			
+		</if>
+		<if test="opt.category != '' ">
+			<![CDATA[
+				and p.category_no = ${opt.category}    
+			]]>			
+		</if>
+		<if test="opt.event != '' ">
+			<![CDATA[
+				and pe.event_no = ${opt.event}   
+			]]>			
+		</if>
+		<if test="opt.option != '' and opt.keyword != ''">
+			<![CDATA[
+				and p.${opt.option} like '%${opt.keyword}%' 
+			]]>			
+		</if>
+	<![CDATA[
+			group by p.no 
+			limit #{startCount},#{countList} 
+	]]>
+	</select>
+	
+	<select id="select_totalCount" parameterType="map" resultType="long" >
+		<![CDATA[
+			select count(*) 
+			from(
+				select * 
+				from product p, product_event pe 
+				where live = 'y' 
+	            and p.no = pe.product_no 
+	       
+		]]>
+		<if test="status != '' ">
+			<![CDATA[
+				and p.sales_status_no = ${status}   
+			]]>			
+		</if>
+		<if test="category != '' ">
+			<![CDATA[
+				and p.category_no = ${category}    
+			]]>			
+		</if>
+		<if test="event != '' ">
+			<![CDATA[
+				and pe.event_no = ${event}   
+			]]>			
+		</if>
+		<if test="option != '' and keyword != ''">
+			<![CDATA[
+				and p.${option} like '%${keyword}%'  
+			]]>			
+		</if>
+		<![CDATA[
+		     group by no
+            ) t;
+		]]>	
+	</select>
 </mapper>

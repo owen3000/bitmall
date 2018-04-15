@@ -1,21 +1,27 @@
 package com.cafe24.bitmall.vo;
 
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.Min;
+
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 
 public class ProductVO {
 
 	private long no;
-	@NotBlank
+	@NotEmpty
 	private String code;
 	@NotEmpty 
 	private String name;
 	@NotEmpty
 	private String manufacturer;
+	@NumberFormat(style=Style.DEFAULT) @Min(1)
 	private long price;
 	@NotEmpty
 	private String description;
+	@Min(1)
 	private long categoryNo;
+	@Min(1)
 	private long salesStatusNo;
 	
 	public long getNo() {

@@ -17,6 +17,7 @@ $(function(){
 	});//$( ".checkbox-event" ).on
 	
 	
+	
 	// form-product-new vaild 
 	$("#form-product-new").on("submit", function() {
 		
@@ -25,7 +26,7 @@ $(function(){
 			allData[ o.name ] = o.value;
 		});//$.each
 		
-		if( allData["category"] == 0 ){
+		if( allData["categoryNo"] == 0 ){
 			alert("카테고리를 선택하세요!");
 			//$('#product-new-category option:contains("상품분류를 선택하세요")').prop('selected', true);
 			event.preventDefault();
@@ -73,7 +74,7 @@ $(function(){
 			return;
 		}
 		
-		if( allData["status"] == undefined ){
+		if( allData["salesStatusNo"] == undefined ){
 			alert("상품 상태를 선택하세요!");
 			event.preventDefault();
 			return;
