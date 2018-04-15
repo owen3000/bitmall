@@ -1,6 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
@@ -15,90 +18,92 @@
 
 <body bgcolor="white" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 
-<form name="form1" method="post" action="" enctype="multipart/form-data">
+<form:form modelAttribute="productVO" name="form1" method="post" action="" enctype="multipart/form-data">
 <table width="800" border="1" cellspacing="0" cellpadding="3" bordercolordark="white" bordercolorlight="black">
 	<tr height="23"> 
 		<td width="100" bgcolor="#CCCCCC" align="center">상품분류</td>
     	<td width="700" bgcolor="#F2F2F2">
-			<select name="menu">
-				<option value="0">상품분류를 선택하세요</option>
-				<option value="1">바지</option>
-				<option value="2" selected>코트</option>
-				<option value="3">브라우스</option>
-			</select>
+		    <form:select path="categoryNo" id="product-new-category">
+		    		<form:option value="0">상품분류를 선택하세요</form:option>
+		    	<c:forEach items="${readLists.categoryList }" var="l" varStatus="status">
+		    		<c:if test="${l.no eq product.categoryNo }">
+		    			<form:option value="${l.no }" selected="selected">${l.name }</form:option>
+		    		</c:if>
+		    		<c:if test="${l.no ne product.categoryNo }">
+		    			<form:option value="${l.no }">${l.name }</form:option>
+		    		</c:if>
+				</c:forEach>
+		    </form:select>
+		    <p class="p-errors"><form:errors path="categoryNo"/></p>
 		</td>
 	</tr>
 	<tr height="23"> 
 		<td width="100" bgcolor="#CCCCCC" align="center">상품코드</td>
 		<td width="700"  bgcolor="#F2F2F2">
-			<input type="text" name="code" value="Coat001" size="20" maxlength="20">
+			<form:input path="code" id="product-new-code" value="${productVO.code }" size="20" maxlength="20"/>
+			<p class="p-errors"><form:errors path="code"/></p>
 		</td>
 	</tr>
 	<tr> 
 		<td width="100" bgcolor="#CCCCCC" align="center">상품명</td>
 		<td width="700"  bgcolor="#F2F2F2">
-			<input type="text" name="name" value="비싼 코트" size="60" maxlength="60">
+			<form:input path="name" id="product-new-name" size="60" maxlength="60" value="${productVO.name }"/>
+			<p class="p-errors"><form:errors path="name"/> </p>
 		</td>
 	</tr>
 	<tr> 
 		<td width="100" bgcolor="#CCCCCC" align="center">제조사</td>
 		<td width="700"  bgcolor="#F2F2F2">
-			<input type="text" name="coname" value="유명코트회사" size="30" maxlength="30">
+			<form:input path="manufacturer" id="product-new-manufacturer" value="${productVO.manufacturer }" size="30" maxlength="30"/>
+			<p class="p-errors"><form:errors path="manufacturer"/></p>
 		</td>
 	</tr>
 	<tr> 
 		<td width="100" bgcolor="#CCCCCC" align="center">판매가</td>
 		<td width="700"  bgcolor="#F2F2F2">
-			<input type="text" name="price" value="4,500,000" size="12" maxlength="12"> 원
+			<form:input path="price" id="product-new-price" value="${productVO.price}" size="12" maxlength="12"/> 원
+			<p class="p-errors"><form:errors path="price"/></p>
 		</td>
 	</tr>
 	<tr> 
 		<td width="100" bgcolor="#CCCCCC" align="center">옵션</td>
     <td width="700"  bgcolor="#F2F2F2">
-			<select name="opt1">
-				<option value="0">옵션선택</option>
-				<option value="1" selected>사이즈</option>
-				<option value="2">색상_WB</option>
-				<option value="3">색상_WR</option>
-			</select> &nbsp; &nbsp; 
-
-			<select name="opt2">
-				<option value="0">옵션선택</option>
-				<option value="1">사이즈</option>
-				<option value="2" selected>색상_WB</option>
-				<option value="3">색상_WR</option>
-			</select> &nbsp; &nbsp; 
+    
+				<c:forEach items="${readLists.optList }" var="l" varStatus="status">
+					<input type="checkbox" name="opt" value="${l.no }">
+					${l.name }&nbsp;
+				</c:forEach>
+			&nbsp; &nbsp; 
+			&nbsp; &nbsp; 
 		</td>
 	</tr>
 	<tr> 
 		<td width="100" bgcolor="#CCCCCC" align="center">제품설명</td>
 		<td width="700"  bgcolor="#F2F2F2">
-			<textarea name="content" rows="4" cols="70">좋은 상품</textarea>
+			<form:textarea path="description" id="product-new-description" value="${productVO.description}" rows="10" cols="80"/>
+			<p class="p-errors"><form:errors path="description"/></p>
 		</td>
 	</tr>
 	<tr> 
 		<td width="100" bgcolor="#CCCCCC" align="center">상품상태</td>
     	<td width="700"  bgcolor="#F2F2F2">
-			<input type="radio" name="status" value="1" checked> 판매중
-			<input type="radio" name="status" value="2"> 판매중지
-			<input type="radio" name="status" value="3"> 품절
+    		<form:radiobuttons path="salesStatusNo" items="${readLists.salesStatusList }" itemValue="no" itemLabel="status" />
+    		<p class="p-errors"><form:errors path="salesStatusNo"/></p>
 		</td>
 	</tr>
 	<tr> 
 		<td width="100" bgcolor="#CCCCCC" align="center">아이콘</td>
 		<td width="700"  bgcolor="#F2F2F2">
-			<input type="checkbox" name="icon_new" value="1"> New &nbsp;&nbsp	
-			<input type="checkbox" name="icon_hit" value="1" checked> Hit &nbsp;&nbsp	
-			<input type="checkbox" name="icon_sale" value="1" onclick="form1.discount.disabled=!form1.discount.disabled;"> Sale &nbsp;&nbsp
-			할인율 : <input type="text" name="discount" value="10" size="3" maxlength="3" disabled> %
+			<c:forEach items="${readLists.eventList }" var="l" varStatus="status">			
+				<input class="checkbox-event" type="checkbox" name="event" value="${l.no }" data-rate="${l.rate }"> ${l.title } &nbsp;&nbsp;	
+			</c:forEach>
+			할인율 : <input id="product-new-discount" type="text" name="discount" value="0" size="3" maxlength="3" readonly="readonly"> %
 		</td>
 	</tr>
 	<tr> 
 		<td width="100" bgcolor="#CCCCCC" align="center">등록일</td>
 		<td width="700"  bgcolor="#F2F2F2">
-			<input type="text" name="regday1" value="2007" size="4" maxlength="4"> 년 &nbsp
-			<input type="text" name="regday2" value="2007" size="2" maxlength="2"> 월 &nbsp
-			<input type="text" name="regday3" value="2007" size="2" maxlength="2"> 일 &nbsp
+			<input type="text" name="regDate" value="${productVO.regDate }" readonly="readonly"> &nbsp;
 		</td>
 	</tr>
 	<tr> 
@@ -167,6 +172,6 @@
 		</td>
 	</tr>
 </table>
-</form>
+</form:form>
 </body>
 </html>

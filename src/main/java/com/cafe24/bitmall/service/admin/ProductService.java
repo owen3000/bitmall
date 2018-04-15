@@ -98,13 +98,23 @@ public class ProductService {
 	}
 	
 	public List<HashMap<String, String>> getList(PagingBean pb ){
-
+		
 		return productDAO.select(pb);
 	}
 	
 	public Long getTotalCount(Map<String, String> opts) {
 		
 		return productDAO.select(opts);
+	}
+	
+	public boolean delete(Long no) {
+		
+		return productDAO.update(no);
+	}
+	
+	public ProductVO get(Long no) {
+		
+		return productDAO.select(no);
 	}
 
 }

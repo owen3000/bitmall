@@ -54,29 +54,6 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
-/*
-	@Auth(role= Role.ADMIN)
-	@RequestMapping(value= {"/member"})
-	public String member(Model model, 
-			@RequestParam(value="nowPage",required=true,defaultValue="1") String nowPage,
-		@RequestParam(value="option",required=true,defaultValue="") String option,
-		@RequestParam(value="keyword",required=true,defaultValue="") String keyword) {
-		
-		// nowPage url로 한글 입력시 error 방지처리.
-		Long lNowPage = WebUtil.checkParameter(nowPage, 1L);
-		
-		Long totalCount = userService.getTotalCount(option,keyword);
-		PagingBean pb = new PagingBean(totalCount, lNowPage, 3, 3,keyword,option);
-		
-		List<UserVO> list = userService.getList(pb);
-		if( list == null) {
-			list = new ArrayList<UserVO>();
-		}
-		
-		model.addAttribute("memberList", list);
-		model.addAttribute("pb", pb);
-		return "admin/member";
-	}*/
 	@RequestMapping(value= {"/product"})
 	public String product(Model model, @ModelAttribute("readLists")Map<String,Object> map,
 			@RequestParam(value="nowPage",required=true,defaultValue="1") String nowPage,
@@ -122,7 +99,10 @@ public class ProductController {
 		if(!model.containsAttribute("productVO")) {
 			model.addAttribute("productVO", new ProductVO());
 		}
-		
+		List<OptVO> oList = (List<OptVO>) map.get("optList");
+		if( oList.isEmpty() ) {
+			return "redirect:/admin/opt";
+		}
 		//model.addAttribute("readLists", map);
 		return "admin/product_new";
 	}
@@ -174,42 +154,40 @@ public class ProductController {
 			 
 		return "redirect:/admin/product";
 	}
-/*	@RequestMapping(value= {"/product_new"},method=RequestMethod.POST)
-	public String productNew(@RequestParam(value="file") MultipartFile[] mpf,
-			@RequestParam(value="category",required=true,defaultValue="")String category,
-			@ModelAttribute ProductVO pvo, 
-			@RequestParam(value="opt",required=true,defaultValue="none")String[] opt,
-			@RequestParam(value="status",required=true,defaultValue="")String status,
-			@RequestParam(value="event",required=true,defaultValue="none")String[] event,
-			@RequestParam(value="discount",required=true,defaultValue="0")String discount) {
-
-		// vo 값 @vaild
-		if( result.hasErrors() ) {
-			System.out.println("[ProductController:productNew] BindingResult error!");
-			return "redirect:/admin/product_new";
-		} 
-		
-		if( "0".equals(category.trim()) ) {
-			System.out.println("[ProductController:productNew] 상품 카테고리 미지정!");
-			return "redirect:/admin/product_new";
-		}
-		
-		
-		Long lCategoryNo = WebUtil.checkParameter(category.trim(), -1L);
-		Long lStatus = WebUtil.checkParameter(status.trim(), -1L);
-
-		if( lCategoryNo == -1L || lStatus == -1L ) {
-			System.out.println("[ProductController:productNew] 카테고리,판매상태 번호 -1L !");
-			return "redirect:/admin/product";
-		}
-		
-		//상품 insert
-		pvo.setCategoryNo(lCategoryNo);
-		pvo.setSalesStatusNo(lStatus);
-		productService.insert(pvo,event,mpf,opt);
-			
-		return "redirect:/admin/product";
-	}*/
 	
-
+	@RequestMapping(value= {"/product_delete"})
+	public String productDelete(@RequestParam(value="no",required=true,defaultValue="")String no) {
+		
+		Long lNo = WebUtil.checkParameter(no.trim(), -1L);
+		if( lNo == -1L || "".equals(no.trim()) ) {
+			System.out.println("[ProductController:productDelete] if( lNo == -1L || \"\".equals(no) ) ");
+			return "redirect:/admin/opt";
+		}
+		
+		if( !productService.delete(lNo) ) {
+			System.out.println("[ProductController:productDelete] if( !productService.delete(lNo) ) ");
+		}
+		
+		return "redirect:/admin/product";
+	}
+	
+	@RequestMapping(value= {"/product_edit"})
+	public String productEdit(@RequestParam(value="no",required=true,defaultValue="")String no,
+			 @ModelAttribute("readLists")Map<String,Object> map, Model model) {
+		
+		Long lNo = WebUtil.checkParameter(no.trim(), -1L);
+		if( lNo == -1L || "".equals(no.trim()) ) {
+			System.out.println("[ProductController:productEdit] if( lNo == -1L || \"\".equals(no) ) ");
+			return "redirect:/admin/opt";
+		}
+		
+		ProductVO result = productService.get(lNo);
+		if( result == null ) {
+			System.out.println("[ProductController:productEdit] if( result == null ) ");
+			return "redirect:/admin/product";			
+		}
+		
+		model.addAttribute("productVO", result);
+		return "admin/product_edit";
+	}
 }

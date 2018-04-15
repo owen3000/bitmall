@@ -35,4 +35,13 @@ public class ProductDAO {
 	public Long select(Map<String, String> opts) {
 		return sqlSession.selectOne("admin_product.select_totalCount",opts);
 	}
+	
+	public boolean update(Long no) {
+		int count = sqlSession.update("admin_product.update_live_n",no);
+		return count == 1;
+	}
+	
+	public ProductVO select(Long no) {
+		return sqlSession.selectOne("admin_product.select_by_no", no);
+	}
 }

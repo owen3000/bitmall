@@ -43,15 +43,16 @@ public class OptionController {
 	public String opts(
 			@RequestParam(value="name",required=true,defaultValue="")String name,
 			Model model) {
-
+		System.out.println("opts");
 		if( "".equals(name.trim()) ) {
 			System.out.println("[OptionController:opts] if( \"\".equals(name) ) ");
 			return "redirect:/admin/opt";
 		}
 		
 		List<OptVO> list = optService.getOptsList(name.trim());
-		if( list == null || list.isEmpty() ) {
-			return "redirect:/admin/opt";
+		if( list == null ) {
+			System.out.println("[OptionController:opts] if( list == null ) ");
+			list = new ArrayList<OptVO>();
 		}
 		
 		model.addAttribute("optsList", list);

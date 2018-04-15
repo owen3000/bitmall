@@ -77,11 +77,11 @@
 			<td width="70"  align="right">${l.price } &nbsp</td>	
 			<td width="50"  align="center">${l.status }</td>	
 			<td width="120" align="center">
-			&nbsp ${fn:replace(l.eventTitle,"/",", ") }
+			&nbsp; ${fn:replace(l.eventTitle,"/",", ") }
 			</td>	
 			<td width="80"  align="center">
-				<a href="product_edit.jsp">수정</a>/
-				<a href="#">삭제</a>
+				<a href="${pageContext.servletContext.contextPath }/admin/product_edit?no=${l.no}">수정</a>/
+				<a href="${pageContext.servletContext.contextPath }/admin/product_delete?no=${l.no}">삭제</a>
 			</td>
 		</tr>	
 	</c:forEach>

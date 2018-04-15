@@ -19,7 +19,7 @@
 		<![CDATA[
 			insert into user   
 			values(null,#{id},password(#{password}),#{name},#{birth},#{tel},
-			#{phone},#{zipcode},#{address},#{email},now(),'y','회원');
+			#{phone},#{zipcode},#{address},#{email},now(),'y','회원') 
 		]]>
 	</insert>
 	
@@ -48,7 +48,7 @@
 			set password= password(#{password}), name=#{name}, birth=#{birth},
 			tel=#{tel}, phone=#{phone},zipcode=#{zipcode},address=#{address},
 			email=#{email}  
-			where no = #{no};
+			where no = #{no}
 		]]>
 	</update>
 </mapper>

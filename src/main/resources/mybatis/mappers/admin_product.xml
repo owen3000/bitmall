@@ -7,7 +7,7 @@
 	<![CDATA[
 		insert into product 
 		values(null,#{code},#{name},#{manufacturer},#{price},
-				#{description},'y',#{categoryNo},#{salesStatusNo})  
+				#{description},'y',#{categoryNo},#{salesStatusNo},now())  
 	]]>
 		<selectKey keyProperty="no" resultType="long" order="AFTER">
 		<![CDATA[
@@ -25,7 +25,7 @@
 	
 	<select id="select_product_list" parameterType="pb" resultType="java.util.HashMap">
 	<![CDATA[
-	select p.no, p.code, p.name, p.manufacturer, p.price, p.description,
+	select p.no, p.code, p.name, p.manufacturer, p.price, p.description, p.reg_date as regDate,
    			 p.category_no as categoryNo, p.sales_status_no as salesStatusNo, e.no, 
   	 		 group_concat(e.title separator '/') as eventTitle, 
  	   		group_concat(e.rate separator '/') as eventRate, ss.status, c.name as categoryName 
@@ -98,5 +98,22 @@
 		     group by no
             ) t;
 		]]>	
+	</select>
+	
+	<update id="update_live_n" parameterType="long">
+	<![CDATA[
+		update product 
+		set live = 'n' 
+		where no = #{no}
+	]]>	
+	</update>
+	
+	<select id="select_by_no" parameterType="long" resultType="productvo">
+	<![CDATA[
+		select no, code, name, manufacturer, price, description,
+			category_no as categoryNo, sales_status_no as salesStatusNo, reg_date as regDate  
+		from product 
+		where no = #{no}
+	]]>		
 	</select>
 </mapper>

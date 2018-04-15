@@ -23,7 +23,7 @@ public class ProductVO {
 	private long categoryNo;
 	@Min(1)
 	private long salesStatusNo;
-	
+	private String regDate;
 	public long getNo() {
 		return no;
 	}
@@ -72,12 +72,20 @@ public class ProductVO {
 	public void setSalesStatusNo(long salesStatusNo) {
 		this.salesStatusNo = salesStatusNo;
 	}
+	public String getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
 	@Override
 	public String toString() {
 		return "ProductVO [no=" + no + ", code=" + code + ", name=" + name + ", manufacturer=" + manufacturer
 				+ ", price=" + price + ", description=" + description + ", categoryNo=" + categoryNo
-				+ ", salesStatusNo=" + salesStatusNo + "]";
+				+ ", salesStatusNo=" + salesStatusNo + ", regDate=" + regDate + "]";
 	}
+	
+
 	
 	
 }
