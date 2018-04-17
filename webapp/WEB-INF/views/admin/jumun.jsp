@@ -163,7 +163,15 @@
 	
 	<c:forEach items="${jumunList }" var="l" varStatus="status">
 		<tr bgcolor="#F2F2F2" height="23">
-			<form class="form-modify" method="post" action="${pageContext.servletContext.contextPath }/admin/jumun/modify_state"> 
+			<form class="form-modify" method="post" action="${pageContext.servletContext.contextPath }/admin/jumun/modify_state">
+				<input name="jumun-no" type="hidden" value="${l.no }">
+				<input class="modify-nowPage" type="hidden" name="nowPage" value="${pb.nowPage }">
+				<input class="modify-day1" type="hidden" name="day1" value="${pb.opt.day1 }">
+				<input class="modify-day2" type="hidden" name="day2" value="${pb.opt.day2 }">
+				<input class="modify-sel1" type="hidden" name="sel1" value="${pb.opt.sel1 }">
+				<input class="modify-sel2" type="hidden" name="sel2" value="${pb.opt.sel2 }">
+				<input class="modify-keyword" type="hidden" name="keyword" value="${pb.opt.keyword }">
+				
 			<td width="70"  align="center"><a href="jumun_info.jsp?no=0803050004">${l.no }</a></td>
 			<td width="70"  align="center">${l.date }</td>
 			<td width="250" align="left">&nbsp;${l.productName }&nbsp; (외${l.count-1 }) </td>	
@@ -172,16 +180,15 @@
 			<td width="65"  align="center">${l.userName }</td>	
 			<td width="50"  align="center">${l.paymentOption }</td>	
 			<td width="135" align="center" valign="bottom">
-				<select class="select-state" data-state="${l.state }" name="state" style="font-size:9pt; color:black">
-					<option value="1">주문신청</option>
-					<option value="2">주문확인</option>
-					<option value="3">입금확인</option>
-					<option value="4">배송중</option>
-					<option value="5">주문완료</option>
-					<option value="6">주문취소</option>
+				<select class="select-state" data-state="${l.state }" name="jumun-state" style="font-size:9pt; color:black">
+					<option value="주문신청">주문신청</option>
+					<option value="주문확인">주문확인</option>
+					<option value="입금확인">입금확인</option>
+					<option value="배송중">배송중</option>
+					<option value="주문완료">주문완료</option>
+					<option value="주문취소">주문취소</option>
 				</select>&nbsp;
-				<input name="jumun-no" type="hidden" value="${l.no }">
-				<input name="modify-state" type="hidden" value="">
+
 				<input class="modify-state" type="image" src="${pageContext.servletContext.contextPath }/assets/images/admin/b_edit1.gif" border="0">
 			</td>	
 			

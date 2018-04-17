@@ -1,5 +1,7 @@
 package com.cafe24.bitmall.controller.admin;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cafe24.bitmall.exception.URLEncordingException;
 import com.cafe24.bitmall.service.admin.JumunService;
 import com.cafe24.interceptor.Auth;
 import com.cafe24.interceptor.Auth.Role;
@@ -33,13 +37,6 @@ public class JumunController {
 			@RequestParam(value="sel2",required=true,defaultValue="") String sel2,
 			@RequestParam(value="keyword",required=true,defaultValue="") String keyword) {
 		
-		System.out.println(nowPage);
-		System.out.println(day1);
-		System.out.println(day2);
-		System.out.println(sel1);
-		System.out.println(sel2);
-		System.out.println(keyword);
-		
 		// nowPage url로 한글 입력시 error 방지처리.
 		Long lNowPage = WebUtil.checkParameter(nowPage, 1L);
 
@@ -49,20 +46,13 @@ public class JumunController {
 		opts.put("sel1", sel1.trim());
 		opts.put("sel2", sel2.trim());
 		opts.put("keyword", keyword);
-		System.out.println(opts);
+
 		Long totalCount = jumunService.getTotalCount(opts);
-		System.out.println(totalCount);
-		System.out.println(lNowPage);
-		
-		
 		PagingBean pb = new PagingBean(totalCount, lNowPage, 2, 3,opts);		
 		
 		
 		List<HashMap<String, Object>> jumunList =
 									jumunService.getList(pb);
-		System.out.println(pb.getStartCount() + ": "+pb.getCountList());
-		System.out.println(jumunList);
-		System.out.println(jumunList.size());
 		
 		model.addAttribute("jumunList", jumunList);
 		model.addAttribute("pb", pb);
@@ -72,12 +62,33 @@ public class JumunController {
 	
 	@RequestMapping(value= {"/jumun/modify_state"})
 	public String modifyState(Model model,
-			@RequestParam(value="nowPage",required=true,defaultValue="1") String nowPage) {
+			@RequestParam(value="nowPage",required=true,defaultValue="1") String nowPage,
+			@RequestParam(value="jumun-no",required=true,defaultValue="") String orderNo,
+			@RequestParam(value="jumun-state",required=true,defaultValue="") String jumunState,
+			@RequestParam(value="day1",required=true,defaultValue="") String day1,
+			@RequestParam(value="day2",required=true,defaultValue="") String day2,
+			@RequestParam(value="sel1",required=true,defaultValue="") String sel1,
+			@RequestParam(value="sel2",required=true,defaultValue="") String sel2,
+			@RequestParam(value="keyword",required=true,defaultValue="") String keyword
+			) {
 		
 		
 		// nowPage url로 한글 입력시 error 방지처리.
-		Long lNowPage = WebUtil.checkParameter(nowPage, 1L);
-		System.out.println("nowPage:"+nowPage);
+		Long lNowPage = WebUtil.checkParameter(nowPage.trim(), 1L);
+		Long lOrderNo = WebUtil.checkParameter(orderNo.trim(), 1L);
+		
+		if( !jumunService.updateState(lOrderNo, jumunState) ) {
+			System.out.println("[JumunController:modifyState] update State fail! ");
+			return "redirect:/admin/jumun";
+		}
+		
+		String queryString = "nowPage="+nowPage+"&day1="+day1+"&day2="+day2+
+				"&sel1="+sel1+"&sel2="+sel2+"&keyword="+keyword;
+
+		System.out.println(queryString);
+		return "redirect:/admin/jumun?"+queryString;
+		//reattr.addFlashAttribute("",)
+		/*
 		Map<String, String> opts = new HashMap<String,String>();
 		System.out.println(opts);
 		Long totalCount = jumunService.getTotalCount(opts);
@@ -91,7 +102,7 @@ public class JumunController {
 		
 		model.addAttribute("jumunList", jumunList);
 		model.addAttribute("pb", pb);
-		model.addAttribute("totalCount", totalCount);
-		return "admin/jumun";
+		model.addAttribute("totalCount", totalCount);*/
+		
 	}
 }

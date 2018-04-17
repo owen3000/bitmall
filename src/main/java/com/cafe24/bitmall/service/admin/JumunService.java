@@ -24,5 +24,13 @@ public class JumunService {
 		
 		return jumunDAO.select(opts);
 	}
+	
+	public boolean updateState(Long orderNo, String state) {
+		Map<String, String> map = new HashMap<String,String>();
+		map.put("no", orderNo.toString());
+		map.put("state", state);
+		
+		return jumunDAO.update(map);
+	}
 
 }

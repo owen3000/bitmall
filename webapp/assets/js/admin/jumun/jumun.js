@@ -10,8 +10,10 @@ $(function(){
 	
 	// state selected 설정
 	$(".select-state option").each(function(){
-		var data = $(".select-state").data("state");
-		if( data == $(this).text() ){
+		var selectData = $(this).parent().data("state");
+		var optionDate = $(this).val();
+	
+		if( selectData == optionDate ){
 			$(this).attr('selected', true);
 		}
 	    
@@ -37,13 +39,12 @@ $(function(){
 	}
 
 	
-	/*$(".modify-state").click(function() {
+	$(".modify-state").click(function() {
+		var temp = $(this).prev().val();
 
-		var state = $(".select-state option:selected").text();
-		alert(state);
 		
 	});//$(".modify-state").click
-*/	
+	
 	
 	// 주문 검색
 	$("#jumun-search").submit(function() {

@@ -136,26 +136,17 @@
 				and '${day2}'  
 			]]>			
 		</if> 
-	
-<!-- 		<if test="sel2 == '고객명' and keyword != '' ">
-			<![CDATA[
-				and u.name like '%${keyword}%'  
-			]]>			
-		</if>
-		<if test="sel2 == '상품명' and keyword != '' ">
-			<![CDATA[
-				and p.name like '%${keyword}%'  
-			]]>			
-		</if>
-		<if test="day1 != '' and day2 != ''">
-			<![CDATA[
-				and ot.date > ${day1}  
-				and ot.date < ${day2}  
-			]]>			
-		</if> -->
 		<![CDATA[
 		     group by ot.no
             ) t 
 		]]>	
 	</select>
+	
+	<update id="update_order_state" parameterType="map">
+		<![CDATA[
+		   update order_table 
+		   set state = #{state}
+		   where no = #{no}
+		]]>	
+	</update>
 </mapper>

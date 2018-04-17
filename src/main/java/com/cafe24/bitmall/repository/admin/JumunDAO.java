@@ -22,5 +22,9 @@ public class JumunDAO {
 	public Long select(Map<String, String> opts) {
 		return sqlSession.selectOne("admin_jumun.select_totalCount",opts);
 	}
+	public boolean update(Map<String, String> noAndState) {
+		int count = sqlSession.update("admin_jumun.update_order_state",noAndState);
+		return count == 1 ;
+	}
 	
 }
