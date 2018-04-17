@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="opt">
+
+	<select id="select_opt" parameterType="long" resultType="optvo">
+		<![CDATA[
+			select o.no, o.name 
+			from product p, product_opt po, opt o 
+			where p.live = 'y' 
+			and p.no = po.product_no 
+            and po.opt_no = o.no 
+            and p.no = #{no} 
+		]]>
+	</select>
+	
+	<select id="select_opts" parameterType="string" resultType="optvo">
+		<![CDATA[
+			select no, name, value 
+			from opt 
+			where name = #{name}
+			and value is not null  
+			order by name 
+		]]>
+	</select>
+
+<!-- 	<insert id="insert" parameterType="uservo">
+		<![CDATA[
+			insert into user   
+			values(null,#{id},password(#{password}),#{name},#{birth},#{tel},
+			#{phone},#{zipcode},#{address},#{email},now(),'y','회원') 
+		]]>
+	</insert> -->
+
+</mapper>

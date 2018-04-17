@@ -10,6 +10,10 @@
 	<title>쇼핑몰 관리자 홈페이지</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<link href="${pageContext.servletContext.contextPath }/assets/css/font.css" rel="stylesheet" type="text/css">
+
+	
+	
+
 </head>
 <body bgcolor="white" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <br>
@@ -117,7 +121,7 @@
 							<tr>
 								<td>
 									<input type='hidden' name='imagename1' value='s001_1.jpg'>
-									&nbsp;<input type="checkbox" name="checkno1" value="1"> <b>이미지1</b>: s001_1.jpg
+									&nbsp;<input type="checkbox" name="checkno1" value="1"> <b>이미지1</b>: ${imageList[0].originalName }
 									<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<input type="file" name="image1" size="20" value="찾아보기">
 								</td>
@@ -125,7 +129,7 @@
 							<tr>
 								<td>
 									<input type='hidden' name='imagename2' value='s001_2.jpg'>
-									&nbsp;<input type="checkbox" name="checkno2" value="1"checked> <b>이미지2</b>: s001_2.jpg
+									&nbsp;<input type="checkbox" name="checkno2" value="1"checked> <b>이미지2</b>: ${imageList[1].originalName }
 									<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<input type="file" name="image2" size="20" value="찾아보기">
 								</td>
@@ -133,7 +137,7 @@
 							<tr>
 								<td>
 									<input type='hidden' name='imagename3' value=''>
-									&nbsp;<input type="checkbox" name="checkno3" value="1"> <b>이미지3</b>:
+									&nbsp;<input type="checkbox" name="checkno3" value="1"> <b>이미지3</b>: ${imageList[2].originalName }
 									<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<input type="file" name="image3" size="20" value="찾아보기">
 								</td>

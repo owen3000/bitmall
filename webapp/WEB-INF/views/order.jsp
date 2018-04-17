@@ -1,12 +1,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
 	<title>비트닷컴 쇼핑몰</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<link href="${pageContext.servletContext.contextPath }/assets/css/font.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery-1.9.0.js">
+</script>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/order/order.js">
+</script>
 </head>
 <body style="margin:0">
 <jsp:include page="/WEB-INF/views/include/head.jsp"/>
@@ -26,7 +32,7 @@
 
 			<!--  현재 페이지 자바스크립  -------------------------------------------->
 			<script language="javascript">
-
+			
 			function Check_Value() {
 				if (!form2.o_name.value) {
 					alert("주문자 이름이 잘 못 되었습니다.");	form2.o_name.focus();	return;
@@ -66,7 +72,7 @@
 					alert("주소가 잘 못 되었습니다.");	form2.r_email.focus();	return;
 				}
 
-				form2.submit();
+				//form2.submit();
 			}
 
 			function FindZip(zip_kind) 
@@ -119,7 +125,7 @@
 				</tr>
 				<tr><td height="10"></td></tr>
 			</table>
-
+			
 			<table border="0" cellpadding="5" cellspacing="1" width="710" class="cmfont" bgcolor="#CCCCCC">
 				<tr bgcolor="F0F0F0" height="23" class="cmfont">
 					<td width="440" align="center">상품</td>
@@ -127,49 +133,35 @@
 					<td width="100" align="center">가격</td>
 					<td width="100" align="center">합계</td>
 				</tr>
+				<c:forEach items="${cartList }" var="l" varStatus="status">
 				<tr bgcolor="#FFFFFF">
 					<td height="60" align="center">
 						<table cellpadding="0" cellspacing="0" width="100%">
 							<tr>
 								<td width="60">
-									<a href="product_detail.jsp?no=0000"><img src="${pageContext.servletContext.contextPath }/assets/images/product/0000_s.jpg" width="50" height="50" border="0"></a>
+									<a href="product_detail.jsp?no=0000"><img src="${pageContext.servletContext.contextPath }/uploads/images/${l.imageVO.saveName}" width="50" height="50" border="0"></a>
 								</td>
 								<td class="cmfont">
-									<a href="product_detail.jsp?no=0000"><font color="#0066CC">제품명1</font></a><br>
-									[옵션]</font> 옵션1
+									<a href="product_detail.jsp?no=0000"><font color="#0066CC">${l.name }</font></a><br>
+									[옵션]</font> ${l.optValue }
 								</td>
 							</tr>
 						</table>
 					</td>
-					<td align="center"><font color="#464646">1&nbsp개</font></td>
-					<td align="center"><font color="#464646">70,200</font> 원</td>
-					<td align="center"><font color="#464646">70,200</font> 원</td>
+					<td align="center"><font color="#464646">${l.amount }개</font></td>
+					<td align="center"><font color="#464646">${l.price }</font> 원</td>
+					<td align="center"><font color="#464646">${l.price * l.amount}</font> 원</td>
 				</tr>
-				<tr bgcolor="#FFFFFF">
-					<td height="60" align="center">
-						<table cellpadding="0" cellspacing="0" width="100%">
-							<tr>
-								<td width="60">
-									<a href="product_detail.jsp?no=0000"><img src="${pageContext.servletContext.contextPath }/assets/images/product/0000_s.jpg" width="50" height="50" border="0"></a>
-								</td>
-								<td class="cmfont">
-									<a href="product_detail.jsp?no=0000"><font color="#0066CC">제품명2</font></a><br>
-									[옵션]</font> 옵션2
-								</td>
-							</tr>
-						</table>
-					</td>
-					<td align="center"><font color="#464646">1&nbsp개</font></td>
-					<td align="center"><font color="#464646">60,000</font> 원</td>
-					<td align="center"><font color="#464646">60,000</font> 원</td>
-				</tr>
+				</c:forEach>
+				
 				<tr>
 					<td colspan="5" bgcolor="#F0F0F0">
 						<table width="100%" border="0" cellpadding="0" cellspacing="0" class="cmfont">
 							<tr>
 								<td bgcolor="#F0F0F0"><img src="${pageContext.servletContext.contextPath }/assets/images/cart_image1.gif" border="0"></td>
 								<td align="right" bgcolor="#F0F0F0">
-									<font color="#0066CC"><b>총 합계금액</font></b> : 상품대금(132,000원) + 배송료(2,500원) = <font color="#FF3333"><b>134,500 원</b></font>&nbsp;&nbsp
+									<font color="#0066CC"><b>총 합계금액</font></b> : 상품대금(<fmt:formatNumber value="${totalPrice }" type="number"/>원) + 배송료(2,500원) = 
+									<font color="#FF3333"><b><fmt:formatNumber value="${totalPrice+2500 }" type="number"/> 원</b></font>&nbsp;&nbsp;
 								</td>
 							</tr>
 						</table>
@@ -183,8 +175,23 @@
 				<tr height="3" bgcolor="#CCCCCC"><td></td></tr>
 			</table>
 
-			<!-- form2 시작  -->
-			<form name="form2" method="post" action="order_pay.jsp">
+	<!-- form2 시작  -->
+			<form:form id="form-order" modelAttribute="deliverySiteVO" name="form2" method="post" action="${pageContext.servletContext.contextPath }/order/pay">
+			<input id="order-birth" type="hidden" value="${authUser.birth }" >
+			<input id="order-tel" type="hidden" value="${authUser.tel }" >
+			<input id="order-phone" type="hidden" value="${authUser.phone }" >
+			<input id="order-zipcode" type="hidden" value="${authUser.zipcode }" >
+			
+			<input id="rs-name" name="name" type="hidden" value="" >
+			<input id="rs-tel" name="tel" type="hidden" value="" >
+			<input id="rs-phone" name="phone" type="hidden" value="" >
+			<input id="rs-email" name="email" type="hidden" value="" >
+			<input id="rs-zipcode" name="zipcode" type="hidden" value="" >
+			<input id="rs-address" name="address" type="hidden" value="" >
+			<input id="rs-requirements" name="requirements" type="hidden" value="" >
+
+
+
 			<table width="710" border="0" cellpadding="0" cellspacing="0" class="cmfont">
 				<tr>
 					<td align="left" valign="top" width="150" STYLE="padding-left:45;padding-top:5">
@@ -197,43 +204,43 @@
 								<td width="150"><b>주문자 성명</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="hidden" name="o_no" value="">
-									<input type="text"   name="o_name" size="20" maxlength="10" value="" class="cmfont1">
+									<input type="hidden" name="o_no" value="${authUser.no }">
+									<input type="text"   name="o_name" size="20" maxlength="10" value="${authUser.name }" class="cmfont1">
 								</td>
 							</tr>
 							<tr height="25">
 								<td width="150"><b>전화번호</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="text" name="o_tel1" size="4" maxlength="4" value="" class="cmfont1"> -
-									<input type="text" name="o_tel2" size="4" maxlength="4" value="" class="cmfont1"> -
-									<input type="text" name="o_tel3" size="4" maxlength="4" value="" class="cmfont1">
+									<input id="order-tel1" type="text" name="o_tel1" size="4" maxlength="4" value="" class="cmfont1"> -
+									<input id="order-tel2" type="text" name="o_tel2" size="4" maxlength="4" value="" class="cmfont1"> -
+									<input id="order-tel3" type="text" name="o_tel3" size="4" maxlength="4" value="" class="cmfont1">
 								</td>
 							</tr>
 							<tr height="25">
 								<td width="150"><b>휴대폰번호</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="text" name="o_phone1" size="4" maxlength="4" value="" class="cmfont1"> -
-									<input type="text" name="o_phone2" size="4" maxlength="4" value="" class="cmfont1"> -
-									<input type="text" name="o_phone3" size="4" maxlength="4" value="" class="cmfont1">
+									<input id="order-phone1" type="text" name="o_phone1" size="4" maxlength="4" value="" class="cmfont1"> -
+									<input id="order-phone2" type="text" name="o_phone2" size="4" maxlength="4" value="" class="cmfont1"> -
+									<input id="order-phone3" type="text" name="o_phone3" size="4" maxlength="4" value="" class="cmfont1">
 								</td>
 							</tr>
 							<tr height="25">
 								<td width="150"><b>E-Mail</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="text" name="o_email" size="50" maxlength="50" value="" class="cmfont1">
+									<input type="text" name="o_email" size="50" maxlength="50" value="${authUser.email }" class="cmfont1">
 								</td>
 							</tr>
 							<tr height="50">
 								<td width="150"><b>주소</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="text" name="o_zip1" size="3" maxlength="3" value="" class="cmfont1" readonly> -
-									<input type="text" name="o_zip2" size="3" maxlength="3" value="" class="cmfont1" readonly>
+									<input id="order-zipcode1" type="text" name="o_zip1" size="3" maxlength="3" value="" class="cmfont1" readonly> -
+									<input id="order-zipcode2" type="text" name="o_zip2" size="3" maxlength="3" value="" class="cmfont1" readonly>
 									<a href="javascript:FindZip(1)"><img src="${pageContext.servletContext.contextPath }/assets/images/b_zip.gif" align="absmiddle" border="0"></a> <br>
-									<input type="text" name="o_juso" size="50" maxlength="200" value="" class="cmfont1" readonly><br>
+									<input type="text" name="o_juso" size="50" maxlength="200" value="${authUser.address }" class="cmfont1" readonly><br>
 								</td>
 							</tr>
 						</table>
@@ -259,57 +266,58 @@
 								<td width="150"><b>주문자정보와 동일</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="radio" name="same" onclick="SameCopy('Y')">예 &nbsp;
-									<input type="radio" name="same" onclick="SameCopy('N')">아니오
+
+								<input type="radio" name="same" onclick="SameCopy('Y')">예 &nbsp;
+								<input type="radio" name="same" onclick="SameCopy('N')">아니오 
 								</td>
 							</tr>
 							<tr height="25">
 								<td width="150"><b>받으실 분 성명</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="text" name="r_name" size="20" maxlength="10" value="" class="cmfont1">
+									<input id="r-name" type="text" name="r_name" size="20" maxlength="10" value="" class="cmfont1">
 								</td>
 							</tr>
 							<tr height="25">
 								<td width="150"><b>전화번호</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="text" name="r_tel1" size="4" maxlength="4" value="" class="cmfont1"> -
-									<input type="text" name="r_tel2" size="4" maxlength="4" value="" class="cmfont1"> -
-									<input type="text" name="r_tel3" size="4" maxlength="4" value="" class="cmfont1">
+									<input id="r-tel1" type="text" name="r_tel1" size="4" maxlength="4" value="" class="cmfont1"> -
+									<input id="r-tel2" type="text" name="r_tel2" size="4" maxlength="4" value="" class="cmfont1"> -
+									<input id="r-tel3" type="text" name="r_tel3" size="4" maxlength="4" value="" class="cmfont1">
 								</td>
 							</tr>
 							<tr height="25">
 								<td width="150"><b>휴대폰번호</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="text" name="r_phone1" size="4" maxlength="4" value="" class="cmfont1"> -
-									<input type="text" name="r_phone2" size="4" maxlength="4" value="" class="cmfont1"> -
-									<input type="text" name="r_phone3" size="4" maxlength="4" value="" class="cmfont1">
+									<input id="r-phone1" type="text" name="r_phone1" size="4" maxlength="4" value="" class="cmfont1"> -
+									<input id="r-phone2" type="text" name="r_phone2" size="4" maxlength="4" value="" class="cmfont1"> -
+									<input id="r-phone3" type="text" name="r_phone3" size="4" maxlength="4" value="" class="cmfont1">
 								</td>
 							</tr>
 							<tr height="25">
 								<td width="150"><b>E-Mail</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="text" name="r_email" size="50" maxlength="50" value="" class="cmfont1">
+									<input id="r-email" type="text" name="r_email" size="50" maxlength="50" value="" class="cmfont1">
 								</td>
 							</tr>
 							<tr height="50">
 								<td width="150"><b>주소</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="text" name="r_zip1" size="3" maxlength="3" value="" class="cmfont1" readonly> -
-									<input type="text" name="r_zip2" size="3" maxlength="3" value="" class="cmfont1" readonly>
+									<input id="r-zip1" type="text" name="r_zip1" size="3" maxlength="3" value="" class="cmfont1" > -
+									<input id="r-zip2" type="text" name="r_zip2" size="3" maxlength="3" value="" class="cmfont1" >
 									<a href="javascript:FindZip(2)"><img src="${pageContext.servletContext.contextPath }/assets/images/b_zip.gif" align="absmiddle" border="0"></a> <br>
-									<input type="text" name="r_juso" size="50" maxlength="200" value="" class="cmfont1" readonly><br>
+									<input id="r-address" type="text" name="r_juso" size="50" maxlength="200" value="" class="cmfont1" ><br>
 								</td>
 							</tr>
 							<tr height="50">
 								<td width="150"><b>배송시요구사항</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<textarea name="o_desc" cols="60" rows="3" class="cmfont1"></textarea>
+									<textarea id="r-req" name="o_req" cols="60" rows="3" class="cmfont1"></textarea>
 								</td>
 							</tr>
 						</table>
@@ -326,14 +334,14 @@
 
 			<table width="710" border="0" cellpadding="0" cellspacing="0" class="cmfont">
 				<tr>
-					<td align="center">
-						<input type="image" src="${pageContext.servletContext.contextPath }/assets/images/b_order3.gif">
+<!-- 주문하기 -->		<td align="center"> 
+						<input id="image-submit" type="image" src="${pageContext.servletContext.contextPath }/assets/images/b_order3.gif">
 					</td>
 				</tr>
 				<tr height="20"><td></td></tr>
 			</table>
 			
-			</form>
+			</form:form>
 
 <!-------------------------------------------------------------------------------------------->	
 <!-- 끝 : 다른 웹페이지 삽입할 부분                                                         -->

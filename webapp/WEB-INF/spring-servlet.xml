@@ -34,6 +34,12 @@
 				</property>
 			</bean>
 		</mvc:message-converters>
+		
+		<!-- argument resolver -->
+		<mvc:argument-resolvers>
+			<bean
+				class="com.cafe24.interceptor.AuthUserHandlerMethodArgumentResolver" />
+		</mvc:argument-resolvers>
 
 	</mvc:annotation-driven>
 
@@ -100,8 +106,8 @@
 
 	<!-- resource mappin location:물리적인곳 , mapping="/uploads/**" uploads의 모든 
 		url -->
-	<mvc:resources location="file:/bitmall/uploads/"
-		mapping="/uploads/images/**" />
+	<mvc:resources location="file:/bitmall/uploads/" 
+	mapping="/uploads/images/**" />
 
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">

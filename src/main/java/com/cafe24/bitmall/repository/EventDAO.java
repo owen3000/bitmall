@@ -1,4 +1,4 @@
-package com.cafe24.bitmall.repository.admin;
+package com.cafe24.bitmall.repository;
 
 import java.util.List;
 
@@ -8,14 +8,15 @@ import org.springframework.stereotype.Repository;
 
 import com.cafe24.bitmall.vo.EventVO;
 
-@Repository("adminEventDAO")
+@Repository
 public class EventDAO {
 
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List<EventVO> select() {
-		return sqlSession.selectList("admin_event.select_list");
+	public List<EventVO> select(Long no) {
+		return sqlSession.selectList("event.select_event",no);
 	}
+	
 	
 }

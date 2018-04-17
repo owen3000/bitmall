@@ -1,3 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
@@ -45,44 +48,22 @@
 					<td width="90"  bgcolor="F2F2F2" align="center">합계</td>
 				</tr>
 				<tr><td colspan="6" bgcolor="DEDCDD"></td></tr>
-
+				
+			<c:forEach items="${jumunList }" var="l" varStatus="status">
 				<tr>
 					<td width="60">
-						<a href="product_detail.html?no=0000"><img src="${pageContext.servletContext.contextPath }/assets/images/product/0000_s.jpg" width="50" height="50" border="0"></a>
+						<a href="product_detail.html?no=0000"><img src="${pageContext.servletContext.contextPath }/uploads/images/${l.imageVO.saveName}" width="50" height="50" border="0"></a>
 					</td>
 					<td height="52">
-						<font color="686868">상품명3</font><br><font color="#0066CC">[옵션]</font> 옵션3
+						<font color="686868">${l.name }</font><br><font color="#0066CC">[옵션]</font> ${l.optValue }
 					</td>
-					<td align="center"><font color="686868">1</font></td>
-					<td align="right"><font color="686868">120,000 원</font></td>
-					<td align="right"><font color="686868">120,000 원</font></td>
-				</tr>
+					<td align="center"><font color="686868">${l.amount }</font></td>
+					<td align="right"><font color="686868"><fmt:formatNumber value="${l.price }" type="number"/> 원</font></td>
+					<td align="right"><font color="686868"><fmt:formatNumber value="${l.price * l.amount}" type="number"/> 원</font></td>
+				</tr>	
 				<tr><td colspan="6" background="${pageContext.servletContext.contextPath }/assets/images/line_dot.gif"></td></tr>
-
-				<tr>
-					<td width="60">
-						<a href="product_detail.html?no=0000"><img src="${pageContext.servletContext.contextPath }/assets/images/product/0000_s.jpg" width="50" height="50" border="0"></a>
-					</td>
-					<td height="52">
-						<font color="686868">상품명1</font><br><font color="#0066CC">[옵션]</font> 옵션1
-					</td>
-					<td align="center"><font color="686868">1</font></td>
-					<td align="right"><font color="686868">120,000 원</font></td>
-					<td align="right"><font color="686868">120,000 원</font></td>
-				</tr>
-				<tr><td colspan="6" background="${pageContext.servletContext.contextPath }/assets/images/line_dot.gif"></td></tr>
-
-				<tr>
-					<td width="60">
-						<a href="product_detail.html?no=0000"><img src="${pageContext.servletContext.contextPath }/assets/images/product/0000_s.jpg" width="50" height="50" border="0"></a>
-					</td>
-					<td height="30">
-						<font color="686868">상품명2</font><br><font color="#0066CC">[옵션]</font> 옵션1
-					</td>
-					<td align="center"><font color="686868">1</font></td>
-					<td align="right"><font color="686868">20,000 원</font></td>
-					<td align="right"><font color="686868">20,000 원</font></td>
-				</tr>
+			</c:forEach>
+				
 				<tr><td colspan="6" height="2" bgcolor="8B9CBF"></td></tr>
 			</table>
 
@@ -102,7 +83,7 @@
 					<td width="100" bgcolor="#F2F2F2">&nbsp;주문번호</td>
 					<td width="242" bgcolor="#FFFFFF">&nbsp;<font color="#686868">200701020001<font></td>
 					<td width="100" bgcolor="#F2F2F2">&nbsp;결제금액</td>
-					<td width="243" bgcolor="#FFFFFF">&nbsp;<font color="#D06404"><b>137,400 원</b></font></td>
+					<td width="243" bgcolor="#FFFFFF">&nbsp;<font color="#D06404"><b><fmt:formatNumber value="${totalPrice}" type="number"/> 원</b></font></td>
 				</tr>
 				<tr height="25">
 					<td width="100" bgcolor="#F2F2F2">&nbsp;결제방식</td>
@@ -141,36 +122,36 @@
 			<table border="0" cellpadding="0" cellspacing="1" width="685" bgcolor="#EEEEEE" class="cmfont">
 				<tr height="25">
 					<td width="100" bgcolor="#F2F2F2">&nbsp;주문자명</td>
-					<td bgcolor="#FFFFFF" colspan="3">&nbsp;<font color="#686868">홍길동</font></td>
+					<td bgcolor="#FFFFFF" colspan="3">&nbsp;<font color="#686868">${authUser.name }</font></td>
 				</tr>
 				<tr height="25">
 					<td width="100" bgcolor="#F2F2F2">&nbsp;전화번호</td>
-					<td width="242" bgcolor="#FFFFFF">&nbsp;<font color="#686868">02-111-1234</font></td>
+					<td width="242" bgcolor="#FFFFFF">&nbsp;<font color="#686868">${authUser.tel }</font></td>
 					<td width="100" bgcolor="#F2F2F2">&nbsp;휴대폰</td>
-					<td width="243" bgcolor="#FFFFFF">&nbsp;<font color="#686868">011-111-1111</font></td>
+					<td width="243" bgcolor="#FFFFFF">&nbsp;<font color="#686868">${authUser.phone }</font></td>
 				</tr>
 				<tr height="25">
 					<td width="100" bgcolor="#F2F2F2">&nbsp;이메일</td>
-					<td bgcolor="#FFFFFF" colspan="3">&nbsp;<font color="#686868">aaa@aaa.aa.aa</font></td>
+					<td bgcolor="#FFFFFF" colspan="3">&nbsp;<font color="#686868">${authUser.email }</font></td>
 				</tr>
 				<tr><td height="1" bgcolor="8B9CBF" colspan="4"></td></tr>
 				<tr height="25">
 					<td width="100" bgcolor="#F2F2F2">&nbsp;수취인명</td>
-					<td bgcolor="#FFFFFF" colspan="3">&nbsp;<font color="#686868">홍길동</font></td>
+					<td bgcolor="#FFFFFF" colspan="3">&nbsp;<font color="#686868">${deliverySiteVO.name }</font></td>
 				</tr>
 				<tr height="25">
 					<td width="100" bgcolor="#F2F2F2">&nbsp;전화번호</td>
-					<td width="242" bgcolor="#FFFFFF">&nbsp;<font color="#686868">02-111-1234</font></td>
+					<td width="242" bgcolor="#FFFFFF">&nbsp;<font color="#686868">${deliverySiteVO.tel }</font></td>
 					<td width="100" bgcolor="#F2F2F2">&nbsp;휴대폰</td>
-					<td width="243" bgcolor="#FFFFFF">&nbsp;<font color="#686868">010-111-1234</font></td>
+					<td width="243" bgcolor="#FFFFFF">&nbsp;<font color="#686868">${deliverySiteVO.phone }</font></td>
 				</tr>
 				<tr height="25">
 					<td width="100" bgcolor="#F2F2F2">&nbsp;배달주소</td>
-					<td bgcolor="#FFFFFF" colspan="3">&nbsp;<font color="#686868">[139-911] &nbsp; 서울 노원구 월계4동  </font></td>
+					<td bgcolor="#FFFFFF" colspan="3">&nbsp;<font color="#686868">${deliverySiteVO.zipcode } &nbsp; ${deliverySiteVO.address }  </font></td>
 				</tr>
 				<tr height="25">
 					<td width="100" bgcolor="#F2F2F2">&nbsp;메모</td>
-					<td bgcolor="#FFFFFF" colspan="3">&nbsp;<font color="#686868"></font></td>
+					<td bgcolor="#FFFFFF" colspan="3">&nbsp;<font color="#686868">${deliverySiteVO.requirements }</font></td>
 				</tr>
 				
 			</table>
@@ -181,7 +162,7 @@
 			<table border="0" cellpadding="0" cellspacing="0" width="690">
 				<tr>
 					<td height="40" class="cmfont" align="right">
-						<a href="jumun.jsp"><img src="${pageContext.servletContext.contextPath }/assets/images/b_list.gif" border="0"></a>&nbsp;&nbsp;&nbsp
+						<a href="${pageContext.servletContext.contextPath }/jumun?nowPage=${param.nowPage}"><img src="${pageContext.servletContext.contextPath }/assets/images/b_list.gif" border="0"></a>&nbsp;&nbsp;&nbsp
 					</td>
 				</tr>
 			</table>

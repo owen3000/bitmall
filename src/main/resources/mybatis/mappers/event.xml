@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="event">
+
+	<select id="select_event" parameterType="long" resultType="eventvo">
+		<![CDATA[
+			select e.no, e.title, e.rate, e.original_icon as originalIcon 
+			from product p, product_event pe, event e  
+			where p.live = 'y' 
+			and p.no = pe.product_no 
+            and pe.event_no = e.no 
+            and p.no = #{productNo} 
+		]]>
+	</select>
+
+<!-- 	<insert id="insert" parameterType="uservo">
+		<![CDATA[
+			insert into user   
+			values(null,#{id},password(#{password}),#{name},#{birth},#{tel},
+			#{phone},#{zipcode},#{address},#{email},now(),'y','회원') 
+		]]>
+	</insert> -->
+
+</mapper>

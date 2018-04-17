@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="order">
+
+
+	<insert id="insert_deliverysitevo" parameterType="deliverysitevo">
+		<![CDATA[
+			insert into delivery_site    
+			values(null,#{name},#{tel},#{phone},#{email},#{zipcode},
+			#{address},#{requirements})  
+		]]>
+		<selectKey resultType="long" keyProperty="no" order="AFTER">
+			<![CDATA[
+				select last_insert_id() 
+			]]>
+		</selectKey>
+	</insert> 
+	
+	<insert id="insert_order" parameterType="ordervo">
+		<![CDATA[
+			insert into order_table    
+			values(null,now(),#{totalPrice},'주문신청',#{paymentOption},
+			#{userNo},#{deliverySiteNo})  
+		]]>
+		<selectKey resultType="long" keyProperty="no" order="AFTER">
+			<![CDATA[
+				select last_insert_id() 
+			]]>
+		</selectKey>
+	</insert> 
+	
+	<insert id="insert_order_product" parameterType="orderproductvo">
+		<![CDATA[
+			insert into order_product      
+			values(null,#{orderNo},#{productNo},#{amount},#{price}) 
+		]]>
+		<selectKey resultType="long" keyProperty="no" order="AFTER">
+			<![CDATA[
+				select last_insert_id() 
+			]]>
+		</selectKey>
+	</insert> 
+	
+	<insert id="insert_order_product_opt" parameterType="orderproductoptvo">
+		<![CDATA[
+			insert into order_product_opt       
+			values(#{orderProductNo},#{optNo})  
+		]]>
+	</insert>
+	
+</mapper>

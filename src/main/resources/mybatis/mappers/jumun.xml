@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="jumun">
+
+	
+	<select id="select_jumuns" parameterType="map" resultType="java.util.HashMap">
+	<![CDATA[
+		select ot.no, ot.date, ot.state,
+			ot.payment_option as paymentOption, p.name, sum(op.amount) as count, ot.total_price as totalPrice 
+		from order_table ot, order_product op , product p   
+		where ot.user_no = #{userNo}  
+		and ot.no = op.order_no 
+		and op.product_no = p.no 
+		group by ot.no 	
+		limit #{startCount},#{countList} 
+	]]>
+	</select>
+
+	<select id="select_totalCount" parameterType="long" resultType="long" >
+		<![CDATA[
+			select count(*) 
+			from order_table  
+			where user_no = #{no} 
+		]]>
+
+	</select>
+	
+	<select id="select_jumun" parameterType="map" resultType="java.util.HashMap">
+	<![CDATA[
+		select ot.no as orderNo, ot.total_price as totalPrice, ot.payment_option as paymentOption 
+				, op.amount, op.price 
+                , p.name , p.no as productNo 
+                ,  group_concat(o.value separator '/') as optValue
+                , group_concat(CAST(o.no AS CHAR) separator '/') as optNos 
+		from order_table ot, order_product op, product p, order_product_opt opo, opt o     
+		where ot.no = #{orderNo}  
+        and ot.user_no = #{userNo} 
+        and ot.no = op.order_no
+        and op.product_no = p.no 
+        and op.no = opo.order_product_no 
+		and opo.opt_no = o.no 
+		group by p.name 
+	]]>
+	</select>
+	
+	<select id="select_delivery_site" parameterType="map" resultType="deliverysitevo">
+	<![CDATA[
+		select ds.name, ds.tel, ds.phone, ds.address, ds.zipcode, ds.requirements 
+		from order_table ot, delivery_site ds 
+		where ot.no = #{orderNo} 
+		and ot.user_no = #{userNo} 
+		and ot.delivery_site_no = ds.no 
+	]]>
+	</select>
+</mapper>

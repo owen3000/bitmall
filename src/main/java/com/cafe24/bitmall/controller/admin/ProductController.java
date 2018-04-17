@@ -20,11 +20,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cafe24.bitmall.service.admin.CategoryService;
 import com.cafe24.bitmall.service.admin.EventService;
+import com.cafe24.bitmall.service.admin.ImageService;
 import com.cafe24.bitmall.service.admin.OptService;
 import com.cafe24.bitmall.service.admin.ProductService;
 import com.cafe24.bitmall.service.admin.SalesStatusService;
 import com.cafe24.bitmall.vo.CategoryVO;
 import com.cafe24.bitmall.vo.EventVO;
+import com.cafe24.bitmall.vo.ImageVO;
 import com.cafe24.bitmall.vo.OptVO;
 import com.cafe24.bitmall.vo.ProductVO;
 import com.cafe24.bitmall.vo.SalesStatusVO;
@@ -50,6 +52,8 @@ public class ProductController {
 	@Autowired
 	private EventService eventService;
 
+	@Autowired
+	private ImageService imageService;
 	
 	@Autowired
 	private ProductService productService;
@@ -99,6 +103,7 @@ public class ProductController {
 		if(!model.containsAttribute("productVO")) {
 			model.addAttribute("productVO", new ProductVO());
 		}
+		@SuppressWarnings("unchecked")
 		List<OptVO> oList = (List<OptVO>) map.get("optList");
 		if( oList.isEmpty() ) {
 			return "redirect:/admin/opt";
@@ -187,7 +192,14 @@ public class ProductController {
 			return "redirect:/admin/product";			
 		}
 		
+		List<ImageVO> imageList = imageService.getByNo(result.getNo());
+		if( imageList == null ) {
+			System.out.println("[ProductController:productEdit] if( imageVO == null ) ");
+			return "redirect:/admin/product";			
+		}	
+		
 		model.addAttribute("productVO", result);
+		model.addAttribute("imageList", imageList);
 		return "admin/product_edit";
 	}
 }

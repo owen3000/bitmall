@@ -7,6 +7,12 @@
 	<title>비트닷컴 쇼핑몰</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<link href="${pageContext.servletContext.contextPath }/assets/css/font.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery-1.9.0.js">
+</script>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/cart/cart.js">
+</script>
+
 </head>
 <body style="margin:0">
 <jsp:include page="/WEB-INF/views/include/head.jsp"/>
@@ -54,65 +60,54 @@
 					<td width="90"  align="center">합계</td>
 					<td width="50"  align="center">삭제</td>
 				</tr>
-				<tr>
-					<form name="form2" method="post" action="">
-					<td height="60" align="center" bgcolor="#FFFFFF">
-						<table cellpadding="0" cellspacing="0" width="100%">
-							<tr>
-								<td width="60">
-									<a href="product_detail.jsp?product_num=0000"><img src="${pageContext.servletContext.contextPath }/assets/images/product/0000_s.jpg" width="50" height="50" border="0"></a>
-								</td>
-								<td class="cmfont">
-									<a href="product_detail.jsp?product_num=0000">제품명</a><br>
-									<font color="#0066CC">[옵션사항]</font> 옵션1
-								</td>
-							</tr>
-						</table>
-					</td>
-					<td align="center" bgcolor="#FFFFFF">
-						<input type="text" name="num1" size="3" value="1" class="cmfont1">&nbsp<font color="#464646">개</font>
-					</td>
-					<td align="center" bgcolor="#FFFFFF"><font color="#464646">70,200</font></td>
-					<td align="center" bgcolor="#FFFFFF"><font color="#464646">70,200</font></td>
-					<td align="center" bgcolor="#FFFFFF">
-						<input type="image" src="${pageContext.servletContext.contextPath }/assets/images/b_edit1.gif" border="0">&nbsp<br>
-						<a href = "#"><img src="${pageContext.servletContext.contextPath }/assets/images/b_delete1.gif" border="0"></a>&nbsp
-					</td>
-					</form>
-				</tr>
-				<tr>
-					<form name="form2" method="post" action="">
-					<td height="60" align="center" bgcolor="#FFFFFF">
-						<table cellpadding="0" cellspacing="0" width="100%">
-							<tr>
-								<td width="60">
-									<a href="product_detail.jsp?product_num=0000"><img src="${pageContext.servletContext.contextPath }/assets/images/product/0000_s.jpg" width="50" height="50" border="0"></a>
-								</td>
-								<td class="cmfont">
-									<a href="product_detail.jsp?product_num=0000">제품명2</a><br>
-									<font color="#0066CC">[옵션사항]</font> 옵션2
-								</td>
-							</tr>
-						</table>
-					</td>
-					<td align="center" bgcolor="#FFFFFF">
-						<input type="text" name="num2" size="3" value="1" class="cmfont1">&nbsp<font color="#464646">개</font>
-					</td>
-					<td align="center" bgcolor="#FFFFFF"><font color="#464646">60,000</font></td>
-					<td align="center" bgcolor="#FFFFFF"><font color="#464646">60,000</font></td>
-					<td align="center" bgcolor="#FFFFFF">
-						<input type="image" src="${pageContext.servletContext.contextPath }/assets/images/b_edit1.gif" border="0">&nbsp<br>
-						<a href = "#"><img src="${pageContext.servletContext.contextPath }/assets/images/b_delete1.gif" border="0"></a>&nbsp
-					</td>
-					</form>
-				</tr>
+			
+				<c:if test="${cartList.size() ne 0 }">
+				
+				<c:forEach items="${cartList }" var="l" varStatus="status">
+					<tr>
+						<form name="form2" method="post" action="">
+						<td height="60" align="center" bgcolor="#FFFFFF">
+							<table cellpadding="0" cellspacing="0" width="100%">
+								<tr>
+									<td width="60">
+										<a href="product_detail.jsp?product_num=0000"><img src="${pageContext.servletContext.contextPath }/uploads/images/${l.imageVO.saveName}" width="50" height="50" border="0"></a>
+									</td>
+									<td class="cmfont">
+										<a href="product_detail.jsp?product_num=0000">${l.name }</a><br>
+										<font color="#0066CC">[옵션사항]</font> ${l.optValue }
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td align="center" bgcolor="#FFFFFF">
+							<input type="text" name="num1" size="3" value="${l.amount }" class="cmfont1" readonly="readonly">&nbsp<font color="#464646">개</font>
+						</td>
+						<td align="center" bgcolor="#FFFFFF"><font color="#464646">${l.price }</font></td>
+						<td align="center" bgcolor="#FFFFFF"><font color="#464646">${l.price * l.amount}</font></td>
+						<td align="center" bgcolor="#FFFFFF">
+							<input type="image" src="${pageContext.servletContext.contextPath }/assets/images/b_edit1.gif" border="0">&nbsp<br>
+							<a href = "#"><img src="${pageContext.servletContext.contextPath }/assets/images/b_delete1.gif" border="0"></a>&nbsp
+						</td>
+						</form>
+					</tr>				
+				</c:forEach>
+				</c:if>
 				<tr>
 					<td colspan="5" bgcolor="#F0F0F0">
 						<table width="100%" border="0" cellpadding="0" cellspacing="0" class="cmfont">
 							<tr>
 								<td bgcolor="#F0F0F0"><img src="${pageContext.servletContext.contextPath }/assets/images/cart_image1.gif" border="0"></td>
 								<td align="right" bgcolor="#F0F0F0">
-									<font color="#0066CC"><b>총 합계금액</font></b> : 상품대금(132,000원) + 배송료(2,500원) = <font color="#FF3333"><b>134,500원</b></font>&nbsp;&nbsp
+									<font color="#0066CC"><b>총 합계금액</font></b> 
+									<label id="product-price">
+										: 상품대금(<fmt:formatNumber value="${totalPrice }" type="number"/>원) + 배송료(2,500원) = 
+									</label>
+								
+									<font color="#FF3333"><b>
+									<c:if test="${cartList.size() ne 0 }">
+									<fmt:formatNumber value="${totalPrice+2500 }" type="number"/>원
+									</c:if>
+									</b></font>&nbsp;&nbsp;
 								</td>
 							</tr>
 						</table>
@@ -122,9 +117,11 @@
 			<table width="710" border="0" cellpadding="0" cellspacing="0" class="cmfont">
 				<tr height="44">
 					<td width="710" align="center" valign="middle">
+						<c:if test="${cartList.size() ne 0 }">
 						<a href="index.jsp"><img src="${pageContext.servletContext.contextPath }/assets/images/b_shopping.gif" border="0"></a>&nbsp;&nbsp;
-						<a href="#"><img src="${pageContext.servletContext.contextPath }/assets/images/b_cartalldel.gif" width="103" height="26" border="0"></a>&nbsp;&nbsp;
-						<a href="order"><img src="${pageContext.servletContext.contextPath }/assets/images/b_order1.gif" border="0"></a>
+						<a href="${pageContext.servletContext.contextPath }/cart/delete"><img src="${pageContext.servletContext.contextPath }/assets/images/b_cartalldel.gif" width="103" height="26" border="0"></a>&nbsp;&nbsp;
+						<a href="${pageContext.servletContext.contextPath }/order"><img src="${pageContext.servletContext.contextPath }/assets/images/b_order1.gif" border="0"></a>
+						</c:if>
 					</td>
 				</tr>
 			</table>

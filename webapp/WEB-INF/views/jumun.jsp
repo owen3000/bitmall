@@ -48,50 +48,20 @@
 					<td width="115" align="center">주문상태</td>
 				</tr>
 				<tr><td colspan="5" bgcolor="DEDCDD"></td></tr>
+				<c:forEach items="${jumunList }" var="l" varStatus="status">
+					<tr>
+						<td height="30" align="center"><font color="686868">${l.date }</font></td>
+						<td align="center">
+							<a href="${pageContext.servletContext.contextPath }/jumun/info?orderNo=${l.no }&nowPage=1"><font color="#0066CC">${l.no }</font></a>
+						</td>
+						<td><font color="686868">${l.name } (등 ${l.count })</font></td>
+						<td align="right"><font color="686868"><fmt:formatNumber value="${l.totalPrice }" type="number"/> 원</font></td>
+						<td align="center"><font color="#0066CC">${l.state }</font></td>
+					</tr>				
+						<tr><td colspan="5" background="${pageContext.servletContext.contextPath }/assets/images/line_dot.gif"></td></tr>
+				</c:forEach>
 
-				<tr>
-					<td height="30" align="center"><font color="686868">2007-01-02</font></td>
-					<td align="center">
-						<a href="jumun_info.jsp?no=13&page=1"><font color="#0066CC">200701020001</font></a>
-					</td>
-					<td><font color="686868">파란 브라우스 (외 2)</font></td>
-					<td align="right"><font color="686868">20,000 원</font></td>
-					<td align="center"><font color="#0066CC">주문신청</font></td>
-				</tr>
-				<tr><td colspan="5" background="${pageContext.servletContext.contextPath }/assets/images/line_dot.gif"></td></tr>
-
-				<tr>
-					<td height="30" align="center"><font color="686868">2007-01-01</font></td>
-					<td align="center">
-						<a href="jumun_info.jsp?no=10&page=1"><font color="#0066CC">200701010011</font></a>
-					</td>
-					<td><font color="686868">하얀 브라우스 (외 1)</font></td>
-					<td align="right"><font color="686868">30,000 원</font></td>
-					<td align="center"><font color="#0066CC">배송중</font></td>
-				</tr>
-				<tr><td colspan="5" background="${pageContext.servletContext.contextPath }/assets/images/line_dot.gif"></td></tr>
-
-				<tr>
-					<td height="30" align="center"><font color="686868">2007-01-01</font></td>
-					<td align="center">
-						<a href="jumun_info.jsp?no=4&page=1"><font color="#0066CC">200701010005</font></a>
-					</td>
-					<td><font color="686868">파란 브라우스 (외 1)</font></td>
-					<td align="right"><font color="686868">30,000 원</font></td>
-					<td align="center"><font color="#D06404">주문취소</font></td>
-				</tr>
-				<tr><td colspan="5" background="${pageContext.servletContext.contextPath }/assets/images/line_dot.gif"></td></tr>
-
-				<tr>
-					<td height="30" align="center"><font color="686868">2007-01-01</font></td>
-					<td align="center">
-						<a href="jumun_info.jsp?no=1&page=1"><font color="#0066CC">200701010001</font></a>
-					</td>
-					<td><font color="686868">실크 브라우스</font></td>
-					<td align="right"><font color="686868">30,000 원</font></td>
-					<td align="center"><font color="#686868">주문완료</font></td>
-				</tr>
-				<tr><td colspan="5" background="${pageContext.servletContext.contextPath }/assets/images/line_dot.gif"></td></tr>
+			
 
 				<tr><td colspan="5" height="2" bgcolor="#0066CC"></td></tr>
 			</table>
@@ -99,11 +69,32 @@
 			<table border="0" cellpadding="0" cellspacing="0" width="690">
 				<tr>
 					<td height="30" class="cmfont" align="center">
-						<img src="${pageContext.servletContext.contextPath }/assets/images/i_prev.gif" align="absmiddle" border="0"> 
-						<font color="#FC0504"><b>1</b></font>&nbsp;
-						<a href="jumun.jsp?page=2"><font color="#7C7A77">[2]</font></a>&nbsp;
-						<a href="jumun.jsp?page=3"><font color="#7C7A77">[3]</font></a>&nbsp;
-						<img src="${pageContext.servletContext.contextPath }/assets/images/i_next.gif" align="absmiddle" border="0">
+					
+					
+			<c:if test="${pb.previousPageGroup }">
+				<a href="${pageContext.servletContext.contextPath }/jumun?nowPage=${pb.startPage-1}">
+					<img src="${pageContext.servletContext.contextPath }/assets/images/admin/i_prev.gif" align="absmiddle" border="0">
+				</a>&nbsp;
+			</c:if>	
+			
+			<c:forEach var="i" begin="${pb.startPage }" end="${pb.endPage }">
+				<c:choose>
+					<c:when test="${pb.nowPage eq i }">
+						<font color="#FC0504"><b>${i }</b></font>&nbsp;
+					</c:when>
+					<c:when test="${pb.nowPage ne i }">
+						<a href="${pageContext.servletContext.contextPath }/jumun?nowPage=${i}">
+						<font color="#7C7A77">[${i }]</font></a>&nbsp;
+					</c:when>
+				</c:choose>
+			</c:forEach>							
+					
+			<c:if test="${pb.nextPageGroup }">
+				<a href="${pageContext.servletContext.contextPath }/jumun?nowPage=${pb.endPage+1}">
+					<img src="${pageContext.servletContext.contextPath }/assets/images/admin/i_next.gif" align="absmiddle" border="0">
+				</a>&nbsp;
+			</c:if>					
+						
 					</td>
 				</tr>
 			</table>

@@ -33,7 +33,9 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		// 디폴트 컨트롤러 뺴고 나머지 컨트롤러로 들옴
 		//2. 어노테이션 정보 추출
 		HandlerMethod hm = (HandlerMethod) handler;
+		if (handler instanceof HandlerMethod) {
 	
+		
 		Auth authClass = hm.getBeanType().getAnnotation(Auth.class);
 		Auth authMethod = hm.getMethodAnnotation(Auth.class);
 		String role = null;
@@ -50,6 +52,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			//System.out.println("authClass: "+authClass.toString());
 	        role = authClass.toString();
 		}
+		
 		//3. 어노테이션이 있는상태. 세션체크해야지
 		HttpSession session = request.getSession();
 		if( session == null ) {
@@ -74,7 +77,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			//System.out.println("[@Auth interceptor] 관리자가 관리자권한 접근 통과!");
 			return true;
 		}
-			
+		}	
 		//LOG.warn("AuthInterceptor: @Auth 허가완료");
 		response.sendRedirect(request.getContextPath());
 		return false;
@@ -83,7 +86,8 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		
+
+		if (handler instanceof HandlerMethod) {
 		//System.out.println("postHandle");
 		HandlerMethod hm = (HandlerMethod) handler;
 		
@@ -123,6 +127,6 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		}	
 		
 	}
-
+	}
 	
 }

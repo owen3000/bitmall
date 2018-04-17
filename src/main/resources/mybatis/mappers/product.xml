@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="product">
+
+	<select id="select" resultType="java.util.HashMap">
+		<![CDATA[
+			select p.no, p.code, p.name, p.manufacturer, p.price, p.description,
+				p.category_no as categoryNo, p.sales_status_no as salesStatusNo,
+			    p.reg_date as regDate , i.no,
+				group_concat(i.original_name separator '/') as originalName ,
+			    group_concat(i.save_name separator '/') as saveName 
+			from product p, image i 
+			where p.live = 'y' 
+			and p.no = i.product_no 
+            group by p.no 
+			order by reg_date desc 
+		]]>
+	</select>
+	
+	<select id="select_by_no" parameterType="long" resultType="productvo">
+		<![CDATA[
+			select p.no, p.code, p.name, p.manufacturer, p.price, p.description,
+				p.category_no as categoryNo, p.sales_status_no as salesStatusNo,
+			    p.reg_date as regDate
+			from product p
+			where p.live = 'y' 
+			and p.no = #{no}
+		]]>
+	</select>
+	
+
+	
+	<insert id="insert" parameterType="uservo">
+		<![CDATA[
+			insert into user   
+			values(null,#{id},password(#{password}),#{name},#{birth},#{tel},
+			#{phone},#{zipcode},#{address},#{email},now(),'y','회원') 
+		]]>
+	</insert>
+
+</mapper>

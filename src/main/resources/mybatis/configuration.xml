@@ -14,10 +14,23 @@
 		<typeAlias alias="eventvo" type="com.cafe24.bitmall.vo.EventVO"/>
 		<typeAlias alias="productvo" type="com.cafe24.bitmall.vo.ProductVO"/>
 		<typeAlias alias="imagevo" type="com.cafe24.bitmall.vo.ImageVO"/>
+		<typeAlias alias="cartvo" type="com.cafe24.bitmall.vo.CartVO"/>
+		<typeAlias alias="deliverysitevo" type="com.cafe24.bitmall.vo.DeliverySiteVO"/>
+		<typeAlias alias="orderproductvo" type="com.cafe24.bitmall.vo.OrderProductVO"/>
+		<typeAlias alias="ordervo" type="com.cafe24.bitmall.vo.OrderVO"/>
+		<typeAlias alias="orderproductoptvo" type="com.cafe24.bitmall.vo.OrderProductOptVO"/>
 	
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />
+		<mapper resource="mybatis/mappers/product.xml" />
+		<mapper resource="mybatis/mappers/image.xml" />
+		<mapper resource="mybatis/mappers/event.xml" />
+		<mapper resource="mybatis/mappers/opt.xml" />
+		<mapper resource="mybatis/mappers/cart.xml" />
+		<mapper resource="mybatis/mappers/order.xml" />
+		<mapper resource="mybatis/mappers/jumun.xml" />
+
 		<mapper resource="mybatis/mappers/admin_user.xml" />
 		<mapper resource="mybatis/mappers/admin_opt.xml" />
 		<mapper resource="mybatis/mappers/admin_category.xml" />
