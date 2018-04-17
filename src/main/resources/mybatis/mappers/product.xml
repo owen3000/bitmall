@@ -25,6 +25,24 @@
 		]]>
 	</select>
 	
+	<select id="select_product_search" parameterType="string" resultType="java.util.HashMap">
+		<![CDATA[
+			select p.no, p.code, p.name, p.manufacturer, p.price, p.description,
+				p.category_no as categoryNo, p.sales_status_no as salesStatusNo,
+			    p.reg_date as regDate , i.no,
+				group_concat(i.original_name separator '/') as originalName ,
+			    group_concat(i.save_name separator '/') as saveName 
+			from product p, image i 
+			where p.live = 'y' 
+			and p.no = i.product_no 
+			and p.name like #{productName} 
+			]]>  
+		<![CDATA[
+            group by p.no 
+			order by reg_date desc 
+		]]>
+	</select>
+	
 	<select id="select_by_no" parameterType="long" resultType="productvo">
 		<![CDATA[
 			select p.no, p.code, p.name, p.manufacturer, p.price, p.description,

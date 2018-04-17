@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.cafe24.bitmall.repository.EventDAO;
 import com.cafe24.bitmall.repository.ImageDAO;
@@ -56,6 +55,31 @@ public class ProductService {
 		return list;
 	}
 	
+	public List<HashMap<String, Object>> getSearchList(String findtext) {
+		String temp = "%"+findtext+"%";
+		List<HashMap<String, Object>> list = productDAO.selectSearchList(temp);
+		
+		for (int i = 0; i < list.size(); i++) {
+			String images = (String) list.get(i).get("originalName");
+			String[] result = images.split("/");
+			list.get(i).put("originalName", result[0]);
+		}
+		for (int i = 0; i < list.size(); i++) {
+			String images = (String) list.get(i).get("saveName");
+			String[] result = images.split("/");
+			list.get(i).put("saveName", result[0]);
+		}
+	
+		//이벤트 정보 추가
+		for (int i = 0; i < list.size(); i++) {
+			Long lProductNo = Long.parseLong(list.get(i).get("no").toString());
+			List<EventVO> eventList = eventDAO.select(lProductNo);
+			list.get(i).put("eventList", eventList);
+		}
+		
+		return list;
+	}
+	
 	public List<ImageVO> getImageListByNo(Long no) {
 		return imageDAO.select(no);
 	}
@@ -64,7 +88,7 @@ public class ProductService {
 	public Map<String, Object> getDetail(Long no) {
 		Map<String, Object> map = new HashMap<String,Object>();
 		ProductVO productVO = productDAO.select(no);
-		System.out.println(productVO);
+
 		List<ImageVO> imageList = imageDAO.select(productVO.getNo());
 		List<EventVO> eventList = eventDAO.select(productVO.getNo());
 		List<OptVO> optList = optDAO.select(productVO.getNo());
@@ -75,11 +99,9 @@ public class ProductService {
 				map.put("size", temp);
 			}else if("색상".equals(optList.get(i).getName())) {
 				map.put("color", temp);
-			}
-
-			
+			}	
 		}
-		
+
 		//discount 계산
 		int discount = 0;
 		for (int i = 0; i < eventList.size(); i++) {

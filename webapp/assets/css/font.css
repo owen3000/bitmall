@@ -1,13 +1,13 @@
-TD {font-size:9pt;font-family: Verdana,±¼¸²;  letter-spacing:-1px; text-decoration: none;}
+TD {font-size:9pt;font-family: Verdana,ï¿½ï¿½ï¿½ï¿½;  letter-spacing:-1px; text-decoration: none;}
 
-.cmfont{font-size:9pt;font-family: Verdana,±¼¸²;  letter-spacing:-1px; text-decoration: none;}
-.cmfont1{font-size:9pt;font-family: Verdana,±¼¸²;  letter-spacing:-1px; text-decoration: none; border:1 solid #cdcdcd;}
-.smfont{font-size:8pt;font-family: µ¸¿ò,±¼¸²;  letter-spacing:-1px; text-decoration: none;}
-.smfont1{font-size:8pt;font-family: µ¸¿ò,±¼¸²;  letter-spacing:0px; text-decoration: none;}
+.cmfont{font-size:9pt;font-family: Verdana,ï¿½ï¿½ï¿½ï¿½;  letter-spacing:-1px; text-decoration: none;}
+.cmfont1{font-size:9pt;font-family: Verdana,ï¿½ï¿½ï¿½ï¿½;  letter-spacing:-1px; text-decoration: none; border:1 solid #cdcdcd;}
+.smfont{font-size:8pt;font-family: ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½;  letter-spacing:-1px; text-decoration: none;}
+.smfont1{font-size:8pt;font-family: ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½;  letter-spacing:0px; text-decoration: none;}
 
-a:link { font-size:9pt; letter-spacing:-1px; font-family:Verdana,µ¸¿ò; color: 5D5D5D;  text-decoration: none;}
-a:visited {font-size:9pt; letter-spacing:-1px; font-family:Verdana,µ¸¿ò; color: 5D5D5D;  text-decoration: none;}
-a:hover { font-size:9pt; letter-spacing:-1px; font-family:Verdana,µ¸¿ò;color: 5D5D5D;  text-decoration: none;}
+a:link { font-size:9pt; letter-spacing:-1px; font-family:Verdana,ï¿½ï¿½ï¿½ï¿½; color: 5D5D5D;  text-decoration: none;}
+a:visited {font-size:9pt; letter-spacing:-1px; font-family:Verdana,ï¿½ï¿½ï¿½ï¿½; color: 5D5D5D;  text-decoration: none;}
+a:hover { font-size:9pt; letter-spacing:-1px; font-family:Verdana,ï¿½ï¿½ï¿½ï¿½;color: 5D5D5D;  text-decoration: none;}
 
 BODY	{ 
 scrollbar-face-color: #F0F0F0; 
@@ -17,4 +17,41 @@ scrollbar-3dlight-color: #ffffff;
 scrollbar-darkshadow-color: #000000; 
 scrollbar-track-color: #ffffff; 
 scrollbar-arrow-color: #000000f;
+}
+
+#category-tr{ text-align: center; background-color: #FFFFFF;  }
+#category-tr td a font{font-size: 13px; font-weight: bold;}
+
+.green_window {
+	display: inline-block;
+	width: 366px; height: 34px;
+	border: 3px solid #2db400;
+	background: white;
+}
+.input_text {
+	width: 348px; height: 21px;
+	margin: 6px 0 0 9px;
+	border: 0;
+	line-height: 21px;
+	font-weight: bold;
+	font-size: 16px;
+	outline: none;
+}
+
+.sch_smit {
+	width: 54px; height: 40px;
+	margin: 0; border: 0;
+	vertical-align: top;
+	background: #22B600;
+	color: white;
+	font-weight: bold;
+	border-radius: 1px;
+	cursor: pointer;
+}
+
+#search-btn{
+	margin-right: 5px;
+}
+#search-btn:hover{
+	background-color: #56C82C; 
 }

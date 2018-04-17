@@ -31,6 +31,10 @@ public class CartDAO {
 		int count = sqlSession.delete("cart.delete", userNo);
 		return count == 1;
 	}
+	public boolean deleteOne(Long cartNo) {
+		int count = sqlSession.delete("cart.delete_One", cartNo);
+		return count == 1;
+	}
 	
 	
 }

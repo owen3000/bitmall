@@ -7,11 +7,6 @@
 	<title>비트닷컴 쇼핑몰</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<link href="${pageContext.servletContext.contextPath }/assets/css/font.css" rel="stylesheet" type="text/css">
-<style type="text/css">
-#category-tr{ text-align: center; background-color: #FBFBFB;  }
-#category-tr td a font{font-size: 17px; font-weight: bold;}
-#category-tr td{padding: 5px 0px;}
-</style>
 
 </head>
 <body style="margin:0">
@@ -24,12 +19,13 @@
 			<jsp:include page="/WEB-INF/views/include/navigation.jsp"/>
 		</td>
 		<td width="10"></td>
-		<td valign="top">
+		
 
 		<!-------------------------------------------------------------------------------------------->	
 		<!-- 시작 : 다른 웹페이지 삽입할 부분                                                                                                                                                            -->
 		<!-------------------------------------------------------------------------------------------->	
 
+<td valign="top">
 			<!---- 화면 우측(신상품) 시작 -------------------------------------------------->	
 			<table width="767" border="0" cellspacing="0" cellpadding="0">
 				<tr>
@@ -49,7 +45,7 @@
 								<tr> 
 									<td align="center">
 										<a href="${pageContext.servletContext.contextPath }/product/detail?no=${l.no}">
-										<img src="${pageContext.servletContext.contextPath }/uploads/images/${l.saveName}" width="120" height="140" border="0"></a>
+										<img src="${pageContext.servletContext.contextPath }/uploads/images/${l.saveName}" width="110" height="130" border="0"></a>
 									</td>
 								</tr>
 								<tr><td height="5"></td></tr>
@@ -61,7 +57,7 @@
 										</c:forEach>		
 									</td>
 								</tr>
-								<tr><td height="20" align="center"><b>${l.price }</b></td></tr>
+								<tr><td height="20" align="center"><b><fmt:formatNumber value="${l.price }" type="number"/> </b></td></tr>
 							</table>
 						</td>						
 					

@@ -7,13 +7,16 @@
 	<tr bgcolor="#262626">
 		<td width="181" align="center"><font color="#FFFFFF">&nbsp <b>Welcome ! &nbsp;&nbsp ${authUser.name}</b></font></td>
 		<td style="font-size:9pt;color:#FFFFFF;font-family:돋움;padding-left:5px;"></td>
-		<td align="right" style="font-size:9pt;color:#FFFFFF;font-family:돋움;"><b>상품검색 ▶&nbsp</b></td>
+		<td align="right" style="font-size:9pt;color:#FFFFFF;font-family:돋움;"><b>상품검색 ▶&nbsp;</b></td>
 		<!-- form1 시작 -->
-		<form name="form1" method="get" action="product_search.jsp">
-		<td width="135">
-			<input type="text" name="findtext" maxlength="40" size="20" class="cmfont1">&nbsp;
+		<form name="form1" method="get" action="${pageContext.servletContext.contextPath }/product_search">
+		<td width="380" height="50">
+		<span class='green_window'>
+			<input class='input_text' type="text" name="findtext" maxlength="40" size="20" class="cmfont1">&nbsp;
+		</span>
 		</td>
-		<td width="60"><input type="image" src="${pageContext.servletContext.contextPath }/assets/images/i_search1.gif"></td>
+		<td width="60">
+		<input  class="sch_smit" id="search-btn" type="submit" value="검색"></td>
 		</form>
 		<!-- form1 끝 -->
 	</tr>

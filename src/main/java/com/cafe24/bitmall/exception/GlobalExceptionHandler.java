@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	private static final Log LOG = LogFactory.getLog( GlobalExceptionHandler.class );
+
 	@ExceptionHandler( Exception.class)
 	public void handlerException(HttpServletRequest request,
 			HttpServletResponse response, Exception e) throws Exception {
@@ -26,8 +26,7 @@ public class GlobalExceptionHandler {
 		StringWriter errors = new StringWriter();
 		// errors에 씀.
 		e.printStackTrace(new PrintWriter(errors));
-		LOG.error(errors);
-		
+		System.out.println(errors);
 
 		// accept 받고
 		String accept = request.getHeader("accept");

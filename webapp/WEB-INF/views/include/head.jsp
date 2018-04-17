@@ -57,9 +57,9 @@
 </table>
 
 <!--  상단 메인 이미지 --------------------------------------------------->
-<table width="959" border="0" cellspacing="0" cellpadding="0" align="center">
+<table width="1159" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr>
-		<td><img src="${pageContext.servletContext.contextPath }/assets/images/main_image0.jpg" width="182" height="175"></td>
-	  <td><img src="${pageContext.servletContext.contextPath }/assets/images/main_image1.jpg" width="777" height="175"></td>
+
+	  <td><img src="${pageContext.servletContext.contextPath }/assets/images/title2.png" align="middle" width="1159" height="275"></td>
 	</tr>
 </table>

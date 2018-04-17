@@ -76,9 +76,9 @@ public class ProductController {
 		opts.put("status", status);
 		opts.put("event", event);
 		opts.put("category", category);
-		System.out.println(opts);
+
 		Long totalCount = productService.getTotalCount(opts);
-		System.out.println(totalCount);
+
 		PagingBean pb = new PagingBean(totalCount, lNowPage, 2, 3,opts);
 		
 		

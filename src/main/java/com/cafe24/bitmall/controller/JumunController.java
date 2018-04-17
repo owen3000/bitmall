@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cafe24.bitmall.service.CategoryServie;
 import com.cafe24.bitmall.service.JumunService;
+import com.cafe24.bitmall.vo.CategoryVO;
 import com.cafe24.bitmall.vo.DeliverySiteVO;
 import com.cafe24.bitmall.vo.UserVO;
 import com.cafe24.interceptor.Auth;
@@ -26,9 +28,19 @@ public class JumunController {
 	@Autowired
 	private JumunService jumunService; 
 	
+	@Autowired
+	private CategoryServie categoryServie;
+	
+	@ModelAttribute("categoryList")
+	public List<CategoryVO> categoryList(){
+		List<CategoryVO> categoryList = categoryServie.getList();
+		return categoryList;
+	}
+	
 	@RequestMapping(value= {"/jumun"})
 	public String jumun(@AuthUser UserVO authUser,Model model,
-			@RequestParam(value="nowPage",required=true,defaultValue="1") String nowPage) {
+			@RequestParam(value="nowPage",required=true,defaultValue="1") String nowPage,
+			@ModelAttribute("categoryList") List<CategoryVO> categoryList) {
 		
 		// nowPage url로 한글 입력시 error 방지처리.
 		Long lNowPage = WebUtil.checkParameter(nowPage.trim(), 1L);
@@ -47,7 +59,8 @@ public class JumunController {
 	
 	@ModelAttribute("jumunList")
 	public List<HashMap<String, Object>> jumunList(@AuthUser UserVO authUser,Model model,
-			@RequestParam(value="orderNo",required=true,defaultValue="") String orderNo) {
+			@RequestParam(value="orderNo",required=true,defaultValue="") String orderNo,
+			@ModelAttribute("categoryList") List<CategoryVO> categoryList) {
 		
 		if("".equals(orderNo.trim())) {
 			return null;
@@ -67,7 +80,8 @@ public class JumunController {
 	@RequestMapping(value= {"/jumun/info"})
 	public String jumunInfo(@AuthUser UserVO authUser,Model model,
 			@ModelAttribute("jumunList")List<HashMap<String, Object>> jumunList,
-			@RequestParam(value="orderNo",required=true,defaultValue="") String orderNo) {
+			@RequestParam(value="orderNo",required=true,defaultValue="") String orderNo,
+			@ModelAttribute("categoryList") List<CategoryVO> categoryList) {
 
 		Long lOrderNo = WebUtil.checkParameter(orderNo.trim(), -1L);
 		if(lOrderNo == -1L) {

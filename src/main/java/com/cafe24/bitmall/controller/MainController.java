@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,8 +24,14 @@ public class MainController {
 	@Autowired
 	private CategoryServie categoryServie;
 	
+	@ModelAttribute("categoryList")
+	public List<CategoryVO> categoryList(){
+		List<CategoryVO> categoryList = categoryServie.getList();
+		return categoryList;
+	}
+	
 	@RequestMapping( "" )
-	public String index(Model model,
+	public String index(Model model, @ModelAttribute("categoryList") List<CategoryVO> categoryList,
 			@RequestParam(value="category-no",required=true,defaultValue="")String categoryNo) {
 		
 		Long lCategoryNo = WebUtil.checkParameter(categoryNo.trim(), -1L);
@@ -32,11 +39,23 @@ public class MainController {
 		List<HashMap<String, Object>> productList =
 							productService.getList(lCategoryNo);
 		
-		List<CategoryVO> categoryList = categoryServie.getList();
+		
 		
 		
 		model.addAttribute("productList", productList);
-		model.addAttribute("categoryList", categoryList);
+		
+		return "main/index";
+	}
+	
+	@RequestMapping( "/product_search" )
+	public String productSearch(Model model, @ModelAttribute("categoryList") List<CategoryVO> categoryList,
+			@RequestParam(value="findtext",required=true,defaultValue="")String findtext) {
+		
+		
+		List<HashMap<String, Object>> productList =
+							productService.getSearchList(findtext);
+		
+		model.addAttribute("productList", productList);
 		
 		return "main/index";
 	}

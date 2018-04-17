@@ -26,9 +26,11 @@
 		<td height="100%" valign="top">
 			<jsp:include page="/WEB-INF/views/include/navigation.jsp"/>
 		</td>
+		
 		<td width="10"></td>
+	
 		<td valign="top">
-
+	
 <!-------------------------------------------------------------------------------------------->	
 <!-- 시작 : 다른 웹페이지 삽입할 부분                                                       -->
 <!-------------------------------------------------------------------------------------------->	
@@ -81,7 +83,7 @@
 									<font color="666666"><b>소비자가</b></font>
 								</td>
 								<td width="1" bgcolor="E8E7EA"></td>
-								<td width="289" style="padding-left:10px"><font color="666666">${map.productVO.price }원</font></td>
+								<td width="289" style="padding-left:10px"><font color="666666"><fmt:formatNumber value="${map.productVO.price }" type="number"/>원</font></td>
 							</tr>
 							<tr><td colspan="3" bgcolor="E8E7EA"></td></tr>
 							<!-- 판매가 -->
@@ -133,7 +135,6 @@
 						<table border="0" cellpadding="0" cellspacing="0" width="370" class="cmfont">
 							<tr>
 								<td height="70" align="center">
-									<label id="b-order"><img src="${pageContext.servletContext.contextPath }/assets/images/b_order.gif" border="0" align="absmiddle"></label>&nbsp;&nbsp;&nbsp;
 									<label id="b-cart"><img src="${pageContext.servletContext.contextPath }/assets/images/b_cart.gif"  border="0" align="absmiddle"></label>
 								</td>
 							</tr>
@@ -169,7 +170,7 @@
 						<br>
 						<center>
 						<c:forEach items="${map.imageList}" var="l">
-							<img src="${pageContext.servletContext.contextPath }/uploads/images/${l.saveName}"><br><br><br>
+							<img src="${pageContext.servletContext.contextPath }/uploads/images/${l.saveName}" width="600em;"><br><br><br>
 						</c:forEach>
 							
 						</center>

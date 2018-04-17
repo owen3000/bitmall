@@ -24,6 +24,7 @@
 			<jsp:include page="/WEB-INF/views/include/navigation.jsp"/>
 		</td>
 		<td width="10"></td>
+
 		<td valign="top">
 
 <!-------------------------------------------------------------------------------------------->	
@@ -85,8 +86,8 @@
 						<td align="center" bgcolor="#FFFFFF"><font color="#464646">${l.price }</font></td>
 						<td align="center" bgcolor="#FFFFFF"><font color="#464646">${l.price * l.amount}</font></td>
 						<td align="center" bgcolor="#FFFFFF">
-							<input type="image" src="${pageContext.servletContext.contextPath }/assets/images/b_edit1.gif" border="0">&nbsp<br>
-							<a href = "#"><img src="${pageContext.servletContext.contextPath }/assets/images/b_delete1.gif" border="0"></a>&nbsp
+<%-- 							<input type="image" src="${pageContext.servletContext.contextPath }/assets/images/b_edit1.gif" border="0">&nbsp<br> --%>
+							<a href = "${pageContext.servletContext.contextPath }/cart/deleteOne?cart-no=${l.cartNo }"><img src="${pageContext.servletContext.contextPath }/assets/images/b_delete1.gif" border="0"></a>&nbsp
 						</td>
 						</form>
 					</tr>				
@@ -118,7 +119,7 @@
 				<tr height="44">
 					<td width="710" align="center" valign="middle">
 						<c:if test="${cartList.size() ne 0 }">
-						<a href="index.jsp"><img src="${pageContext.servletContext.contextPath }/assets/images/b_shopping.gif" border="0"></a>&nbsp;&nbsp;
+						<%-- <a href="index.jsp"><img src="${pageContext.servletContext.contextPath }/assets/images/b_shopping.gif" border="0"></a>&nbsp;&nbsp; --%>
 						<a href="${pageContext.servletContext.contextPath }/cart/delete"><img src="${pageContext.servletContext.contextPath }/assets/images/b_cartalldel.gif" width="103" height="26" border="0"></a>&nbsp;&nbsp;
 						<a href="${pageContext.servletContext.contextPath }/order"><img src="${pageContext.servletContext.contextPath }/assets/images/b_order1.gif" border="0"></a>
 						</c:if>

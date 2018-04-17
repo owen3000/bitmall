@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.cafe24.bitmall.service.CartService;
+import com.cafe24.bitmall.service.CategoryServie;
 import com.cafe24.bitmall.service.OrderService;
+import com.cafe24.bitmall.vo.CategoryVO;
 import com.cafe24.bitmall.vo.DeliverySiteVO;
 import com.cafe24.bitmall.vo.OrderVO;
 import com.cafe24.bitmall.vo.UserVO;
@@ -28,8 +30,18 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService; 
 	
+	@Autowired
+	private CategoryServie categoryServie;
+	
+	@ModelAttribute("categoryList")
+	public List<CategoryVO> categoryList(){
+		List<CategoryVO> categoryList = categoryServie.getList();
+		return categoryList;
+	}
+	
 	@ModelAttribute("cartList")
-	public List<HashMap<String, Object>> cartList(@AuthUser UserVO authUser,Model model) {
+	public List<HashMap<String, Object>> cartList(@AuthUser UserVO authUser,Model model,
+			@ModelAttribute("categoryList") List<CategoryVO> categoryList) {
 		
 		List<HashMap<String, Object>> cartList =
 				cartService.getList(authUser.getNo());
@@ -39,7 +51,8 @@ public class OrderController {
 
 	@RequestMapping(value= {"/order"})
 	public String order( @ModelAttribute("cartList")List<HashMap<String, Object>> cartList,
-			Model model, @ModelAttribute("deliverySiteVO") DeliverySiteVO vo) {
+			Model model, @ModelAttribute("deliverySiteVO") DeliverySiteVO vo,
+			@ModelAttribute("categoryList") List<CategoryVO> categoryList) {
 		
 		//total price 계산 
 		Long totalPrice = 0L;
@@ -54,7 +67,8 @@ public class OrderController {
 	
 	@RequestMapping(value= {"/order/pay"})
 	public String orderPay(@ModelAttribute("cartList")List<HashMap<String, Object>> cartList,
-			Model model, @ModelAttribute("deliverySiteVO") DeliverySiteVO vo) {
+			Model model, @ModelAttribute("deliverySiteVO") DeliverySiteVO vo,
+			@ModelAttribute("categoryList") List<CategoryVO> categoryList) {
 		
 		//total price 계산 
 		Long totalPrice = 0L;
@@ -71,7 +85,8 @@ public class OrderController {
 	public String orderOk(
 			Model model, @ModelAttribute("deliverySiteVO") DeliverySiteVO deliverySiteVO,
 			@ModelAttribute("cartList")List<HashMap<String, Object>> cartList,
-			@ModelAttribute OrderVO orderVO ) {
+			@ModelAttribute OrderVO orderVO,
+			@ModelAttribute("categoryList") List<CategoryVO> categoryList) {
 		
 		if( !orderService.insertOrder(deliverySiteVO, orderVO, cartList)) {
 			System.out.println("[OrderController:orderOk] 주문 실패!");
@@ -82,7 +97,7 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value= {"/order/order_ok"})
-	public String orderOk() {
+	public String orderOk(@ModelAttribute("categoryList") List<CategoryVO> categoryList) {
 		
 
 		return "order_ok";

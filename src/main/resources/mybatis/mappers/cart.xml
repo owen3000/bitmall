@@ -26,7 +26,7 @@
 	<select id="select_cart" parameterType="long" resultType="java.util.HashMap">
 	<![CDATA[
 		select c.no as cartNo, c.user_no as userNo, c.product_no as productNo,
-			c.amount, c.price,  group_concat(o.value separator '/') as optValue ,
+			c.amount, c.price,  group_concat(o.value separator '/') as optValue ,p.name,
 		    p.no as productNo ,group_concat(CAST(o.no AS CHAR) separator '/') as optNos    
 		from cart c , cart_option co, opt o , product p
 		where c.user_no = #{userNo} 
@@ -42,6 +42,13 @@
 	<![CDATA[
 		delete from cart  
 		where user_no = #{userNo} 
+	]]>
+	</delete>
+	
+	<delete id="delete_One" parameterType="long">
+	<![CDATA[
+		delete from cart  
+		where no = #{cartNo} 
 	]]>
 	</delete>
 	

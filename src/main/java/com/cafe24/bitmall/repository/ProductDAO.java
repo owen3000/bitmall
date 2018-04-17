@@ -18,6 +18,9 @@ public class ProductDAO {
 	public List<HashMap<String, Object>> selectList(Long categoryNo) {
 		return sqlSession.selectList("product.select",categoryNo);
 	}
+	public List<HashMap<String, Object>> selectSearchList(String productName) {
+		return sqlSession.selectList("product.select_product_search",productName);
+	}
 	
 	public ProductVO select(Long no) {
 		return sqlSession.selectOne("product.select_by_no",no);

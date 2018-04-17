@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cafe24.bitmall.service.CartService;
+import com.cafe24.bitmall.service.CategoryServie;
 import com.cafe24.bitmall.vo.CartVO;
+import com.cafe24.bitmall.vo.CategoryVO;
 import com.cafe24.bitmall.vo.UserVO;
 import com.cafe24.interceptor.Auth;
 import com.cafe24.interceptor.AuthUser;
@@ -25,6 +27,15 @@ public class CartController {
 	
 	@Autowired
 	private CartService cartService; 
+	
+	@Autowired
+	private CategoryServie categoryServie;
+	
+	@ModelAttribute("categoryList")
+	public List<CategoryVO> categoryList(){
+		List<CategoryVO> categoryList = categoryServie.getList();
+		return categoryList;
+	}
 
 	@ModelAttribute("cartList")
 	public List<HashMap<String, Object>> cartList(@AuthUser UserVO authUser,Model model) {
@@ -36,7 +47,7 @@ public class CartController {
 	}
 	
 	@RequestMapping(value= {"/cart"})
-	public String order(@AuthUser UserVO authUser, Model model,
+	public String order(@AuthUser UserVO authUser, Model model,@ModelAttribute("categoryList") List<CategoryVO> categoryList,
 			@ModelAttribute("cartList")List<HashMap<String, Object>> cartList) {
 		
 		//total price 계산 
@@ -56,7 +67,8 @@ public class CartController {
 			@RequestParam(value="num",required=true,defaultValue="")String amount,
 			@RequestParam(value="color",required=true,defaultValue="")String colorNo,
 			@RequestParam(value="size",required=true,defaultValue="")String sizeNo,
-			@RequestParam(value="discount-price",required=true,defaultValue="")String price) {
+			@RequestParam(value="discount-price",required=true,defaultValue="")String price,
+			@ModelAttribute("categoryList") List<CategoryVO> categoryList) {
 		System.out.println(price);
 		if( "".equals(productNo.trim()) || "".equals(amount.trim())  ) {
 			System.out.println("[CartController:insert] param data '' ");
@@ -92,12 +104,35 @@ public class CartController {
 	
 	@RequestMapping(value= {"/cart/delete"})
 	public String delete(@AuthUser UserVO authUser, Model model,
-			@ModelAttribute("cartList")List<HashMap<String, Object>> cartList) {
+			@ModelAttribute("cartList")List<HashMap<String, Object>> cartList,
+			@ModelAttribute("categoryList") List<CategoryVO> categoryList) {
 		
 		if( !cartService.deleteCart(authUser.getNo())) {
 			System.out.println("[CartController:delete] 카트 삭제 실패!");
 		}
 		
+		return "redirect:/cart";
+	}
+	
+	@RequestMapping(value= {"/cart/deleteOne"})
+	public String deleteOne(@AuthUser UserVO authUser, Model model,
+			@ModelAttribute("categoryList") List<CategoryVO> categoryList,
+			@RequestParam(value="cart-no",required=true,defaultValue="")String cartNo) {
+		
+		Long lCartNo = WebUtil.checkParameter(cartNo.trim(), -1L);
+		if( lCartNo == -1L ) {
+			System.out.println("[CartController:deleteOne] if( lCartNo == -1L )");
+			return "redirect:/cart";
+		}
+		
+		if( !cartService.deleteOne(lCartNo)) {
+			System.out.println("[CartController:delete] 카트 삭제 실패!");
+		}
+		
+		List<HashMap<String, Object>> cartList =
+				cartService.getList(authUser.getNo());
+		
+		model.addAttribute("cartList", cartList);
 		return "redirect:/cart";
 	}
 

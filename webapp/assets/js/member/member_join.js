@@ -5,6 +5,13 @@ $(function(){
 	// join시 값 체크
 	$("#join-form").submit(function() {
 		
+		if( $("#img-checkid").data("flag") == "false"){
+			console.log($("#img-checkid").data("flag"));
+			alert("중복된 아이디 입니다.");
+			event.preventDefault();
+			return;
+		}
+		
 		var allData = {};
 		$.each($(this).serializeArray(), function(index, o) {
 			allData[ o.name ] = o.value;
@@ -183,14 +190,15 @@ $(function(){
 			
 		var id = $(this).val();
 		if( id == ""){
+			$("#img-checkid").data("flag","false");
 			$("#img-checkid").hide();
 			return;
 		}
 		
 		$.ajax({
 			url: "/bitmall/api/user/checkId?id="+id,
-			type:'get',
-			dataType:'json',
+			type:"get",
+			dataType:"json",
 			success: function(response){
 				console.log(response);
 				if( response.result == "fail" ){
@@ -200,10 +208,12 @@ $(function(){
 				}
 				
 				if( response.data == "exist" ){
+					$("#img-checkid").data("flag","false");
 					$("#img-checkid").hide();
 					return;
 				}
 				if( response.data == "none" ){
+					$("#img-checkid").data("flag","true");
 					$("#img-checkid").show();
 					return;
 				}

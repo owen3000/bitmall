@@ -51,5 +51,9 @@ public class CartService {
 	public boolean deleteCart(Long userNo) {
 		return cartDAO.delete(userNo);
 	}
+	
+	public boolean deleteOne(Long cartNo) {
+		return cartDAO.deleteOne(cartNo);
+	}
 
 }

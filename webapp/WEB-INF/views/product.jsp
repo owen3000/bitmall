@@ -18,6 +18,10 @@
 			<jsp:include page="/WEB-INF/views/include/navigation.jsp"/>
 		</td>
 		<td width="10"></td>
+
+
+
+
 		<td valign="top">
 
 

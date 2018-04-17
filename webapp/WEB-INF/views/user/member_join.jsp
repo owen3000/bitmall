@@ -22,6 +22,7 @@
 			<jsp:include page="/WEB-INF/views/include/navigation.jsp"/>
 		</td>
 		<td width="10"></td>
+
 		<td valign="top">
 
 		<!-------------------------------------------------------------------------------------------->	
@@ -64,7 +65,7 @@
 											<td>
 												<input id="join-id" type="text" name="id" maxlength = "12" value="" size="20" class="cmfont1" > 
 											<!-- 	<a href="javascript:check_id();"><img align="absmiddle" src="${pageContext.servletContext.contextPath }/assets/images/b_idcheck.gif" border="0"></a> -->
-												<img id="img-checkid" style="display: none;" src="${pageContext.request.contextPath}/assets/images/check.png" alt="사용가능">
+												<img data-flag="false" id="img-checkid" style="display: none;" src="${pageContext.request.contextPath}/assets/images/check.png" alt="사용가능">
 											</td>
 										</tr>
 										<tr>
