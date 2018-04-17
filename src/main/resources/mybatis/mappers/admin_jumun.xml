@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="admin_jumun">
+
+	<select id="select_list" parameterType="pb" resultType="java.util.HashMap">
+	<![CDATA[
+			select ot.no, DATE_FORMAT(ot.date, "%Y-%m-%d") as date, ot.total_price as totalPrice ,
+				ot.payment_option as paymentOption, ot.state, p.name as productName 
+			    , count(p.name) as count, u.name as userName 
+			from order_table ot, order_product op, product p, user u  
+			where ot.no = op.order_no 
+			and op.product_no = p.no 
+			and ot.user_no = u.no 
+	]]>
+	
+		<if test="opt.sel2 == 'jumunNo' and opt.keyword != '' ">
+			<![CDATA[
+				and ot.no like '%${opt.keyword}%'  
+			]]>			
+		</if>
+		<if test="opt.sel2 == 'customerName' ">
+			<![CDATA[
+				and u.name like '%${opt.keyword}%'  
+			]]>			
+		</if>
+		<if test="opt.sel2 == 'productName' ">
+			<![CDATA[
+				and p.name like '%${opt.keyword}%'  
+			]]>			
+		</if>
+		<if test="opt.sel1 == 'jumun' ">
+			<![CDATA[
+				and ot.state = '주문신청' 
+			]]>			
+		</if>
+		<if test="opt.sel1 == 'jumunOk' ">
+			<![CDATA[
+				and ot.state = '주문확인'  
+			]]>			
+		</if>
+		<if test="opt.sel1 == 'depositOk' ">
+			<![CDATA[
+				and ot.state = '입금확인'  
+			]]>			
+		</if>
+		<if test="opt.sel1 == 'delivery' ">
+			<![CDATA[
+				and ot.state = '배달중'  
+			]]>			
+		</if>
+		<if test="opt.sel1 == 'complete' ">
+			<![CDATA[
+				and ot.state = '배달완료'  
+			]]>			
+		</if>
+		<if test="opt.sel1 == 'jumunCancel' ">
+			<![CDATA[
+				and ot.state = '주문취소'  
+			]]>			
+		</if>
+		<if test="opt.day1 != '' and opt.day2 != ''">
+			<![CDATA[
+				and ot.date between '${opt.day1}'  
+				and  '${opt.day2}' 
+			]]>			
+		</if> 
+
+	<![CDATA[
+			group by ot.no 
+			limit #{startCount},#{countList} 
+	]]>
+	</select>
+	
+	<select id="select_totalCount" parameterType="map" resultType="long" >
+		<![CDATA[
+			select count(*) 
+			from(
+				select ot.no, DATE_FORMAT(ot.date, "%Y-%m-%d") as date, ot.total_price as totalPrice ,
+					ot.payment_option as paymentOption, ot.state, p.name as productName 
+				    , count(p.name) as count, u.name as userName 
+				from order_table ot, order_product op, product p, user u  
+				where ot.no = op.order_no 
+				and op.product_no = p.no 
+				and ot.user_no = u.no 
+	       
+		]]>
+		<if test="sel2 == 'jumunNo' and keyword != '' ">
+			<![CDATA[
+				and ot.no like '%${keyword}%'  
+			]]>			
+		</if>
+		<if test="sel2 == 'customerName' ">
+			<![CDATA[
+				and u.name like '%${keyword}%'  
+			]]>			
+		</if>
+		<if test="sel2 == 'productName' ">
+			<![CDATA[
+				and p.name like '%${keyword}%'  
+			]]>			
+		</if>
+		<if test="sel1 == 'jumun' ">
+			<![CDATA[
+				and ot.state = '주문신청'  
+			]]>			
+		</if>
+		<if test="sel1 == 'jumunOk' ">
+			<![CDATA[
+				and ot.state = '주문확인' 
+			]]>			
+		</if>
+		<if test="sel1 == 'depositOk' ">
+			<![CDATA[
+				and ot.state = '입금확인' 
+			]]>			
+		</if>
+		<if test="sel1 == 'delivery' ">
+			<![CDATA[
+				and ot.state = '배달중' 
+			]]>			
+		</if>
+		<if test="sel1 == 'complete' ">
+			<![CDATA[
+				and ot.state = '배달완료' 
+			]]>			
+		</if>
+		<if test="sel1 == 'jumunCancel' ">
+			<![CDATA[
+				and ot.state = '주문취소' 
+			]]>			
+		</if>
+		<if test="day1 != '' and day2 != ''">
+			<![CDATA[
+				and ot.date between '${day1}' 
+				and '${day2}'  
+			]]>			
+		</if> 
+	
+<!-- 		<if test="sel2 == '고객명' and keyword != '' ">
+			<![CDATA[
+				and u.name like '%${keyword}%'  
+			]]>			
+		</if>
+		<if test="sel2 == '상품명' and keyword != '' ">
+			<![CDATA[
+				and p.name like '%${keyword}%'  
+			]]>			
+		</if>
+		<if test="day1 != '' and day2 != ''">
+			<![CDATA[
+				and ot.date > ${day1}  
+				and ot.date < ${day2}  
+			]]>			
+		</if> -->
+		<![CDATA[
+		     group by ot.no
+            ) t 
+		]]>	
+	</select>
+</mapper>

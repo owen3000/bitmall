@@ -7,6 +7,12 @@
 	<title>비트닷컴 쇼핑몰</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<link href="${pageContext.servletContext.contextPath }/assets/css/font.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+#category-tr{ text-align: center; background-color: #FBFBFB;  }
+#category-tr td a font{font-size: 17px; font-weight: bold;}
+#category-tr td{padding: 5px 0px;}
+</style>
+
 </head>
 <body style="margin:0">
 <jsp:include page="/WEB-INF/views/include/head.jsp"/>

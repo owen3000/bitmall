@@ -32,8 +32,9 @@ public class ProductService {
 	private OptDAO optDAO;
 	
 	
-	public List<HashMap<String, Object>> getList() {
-		List<HashMap<String, Object>> list = productDAO.select();
+	public List<HashMap<String, Object>> getList(Long categoryNo) {
+		List<HashMap<String, Object>> list = productDAO.selectList(categoryNo);
+		
 		for (int i = 0; i < list.size(); i++) {
 			String images = (String) list.get(i).get("originalName");
 			String[] result = images.split("/");

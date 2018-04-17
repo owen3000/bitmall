@@ -1,6 +1,5 @@
 package com.cafe24.bitmall.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,8 +14,8 @@ import com.cafe24.bitmall.service.JumunService;
 import com.cafe24.bitmall.vo.DeliverySiteVO;
 import com.cafe24.bitmall.vo.UserVO;
 import com.cafe24.interceptor.Auth;
-import com.cafe24.interceptor.AuthUser;
 import com.cafe24.interceptor.Auth.Role;
+import com.cafe24.interceptor.AuthUser;
 import com.cafe24.util.PagingBean;
 import com.cafe24.util.WebUtil;
 

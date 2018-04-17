@@ -3,7 +3,7 @@
 
 <mapper namespace="product">
 
-	<select id="select" resultType="java.util.HashMap">
+	<select id="select" parameterType="long" resultType="java.util.HashMap">
 		<![CDATA[
 			select p.no, p.code, p.name, p.manufacturer, p.price, p.description,
 				p.category_no as categoryNo, p.sales_status_no as salesStatusNo,
@@ -12,7 +12,14 @@
 			    group_concat(i.save_name separator '/') as saveName 
 			from product p, image i 
 			where p.live = 'y' 
-			and p.no = i.product_no 
+			and p.no = i.product_no
+			]]>  
+		<if test="_parameter > 0">
+		<![CDATA[
+			and p.category_no = #{_parameter} 
+		]]> 
+		</if>	
+		<![CDATA[
             group by p.no 
 			order by reg_date desc 
 		]]>

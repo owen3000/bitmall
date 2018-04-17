@@ -206,8 +206,8 @@
 								<td width="150"><b>결재방법 선택</b></td>
 								<td width="20"><b>:</b></td>
 								<td width="390">
-									<input type="radio" name="paymentOption" value="card" onclick="javascript:PaySel(0);" checked>카드 &nbsp;
-									<input type="radio" name="paymentOption" value="deposit" onclick="javascript:PaySel(1);">무통장
+									<input type="radio" name="paymentOption" value="카드" onclick="javascript:PaySel(0);" checked>카드 &nbsp;
+									<input type="radio" name="paymentOption" value="무통장" onclick="javascript:PaySel(1);">무통장
 								</td>
 							</tr>
 						</table>

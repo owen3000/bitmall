@@ -45,12 +45,7 @@
 				<tr><td height="1" bgcolor="#DEDCDD"colspan="4"></td></tr>
 				<tr height="25" bgcolor="#FFFFFF">	
 					<td width="90" align="center"><font color="#686868">1</font></td>	
-					<td><a href="faq_read.jsp?no=1"><font color="#686868">자주 하는 질문 1</font></a></td>	
-				</tr>
-				<tr><td height="1" bgcolor="#DEDCDD"colspan="4"></td></tr>
-				<tr height="25" bgcolor="#FFFFFF">	
-					<td width="90" align="center"><font color="#686868">2</font></td>	
-					<td><a href="faq_read.jsp?no=1"><font color="#686868">자주 하는 질문 2</font></a></td>	
+					<td><a href="faq_read.jsp?no=1"><font color="#686868">배송은 몇일 정도 걸리나요?</font></a></td>	
 				</tr>
 
 				<tr><td height="1" bgcolor="#DEDCDD"colspan="4"></td></tr>

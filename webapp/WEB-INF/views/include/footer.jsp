@@ -11,13 +11,13 @@
 		<td> 
 			<table width="959" border="0" cellspacing="0" cellpadding="0">
 				<tr> 
-					<td valign="top"><a href="index.jsp"><img src="${pageContext.servletContext.contextPath }/assets/images/footer_logo.gif" border="0"></a></td>
+					<td valign="top"><a href="${pageContext.servletContext.contextPath }/"><img src="${pageContext.servletContext.contextPath }/assets/images/logo.png" border="0" width="180em" height="180em"></a></td>
 					<td width="28"></td>
 					<td> 
 						<table border="0" cellspacing="0" cellpadding="0">
 							<tr> 
 								<td> 
-									<table border="0" cellspacing="0" cellpadding="0">
+									<table border="0" cellspacing="0em" cellpadding="0em">
 										<tr> 
 											<td><a href="company.jsp"><img src="${pageContext.servletContext.contextPath }/assets/images/footer_menu01.gif" border="0"></a></td>
 											<td><img src="${pageContext.servletContext.contextPath }/assets/images/footer_line.gif"></td>
@@ -37,8 +37,8 @@
 						<table border="0" cellspacing="0" cellpadding="0">
 							<tr> 
 								<td align="right">
-										<a href="index.jsp"><img src="${pageContext.servletContext.contextPath }/assets/images/footer_home.gif" border="0"></a>&nbsp
-										<a href="#top"><img src="${pageContext.servletContext.contextPath }/assets/images/footer_top.gif" border="0"></a>
+										<a href="${pageContext.servletContext.contextPath }/"><img src="${pageContext.servletContext.contextPath }/assets/images/footer_home.gif" border="0"></a>&nbsp
+										 <%-- <a href="${pageContext.servletContext.contextPath }/admin/admin_login">관리자 </a>  --%>
 								</td>
 							</tr>
 							<tr>

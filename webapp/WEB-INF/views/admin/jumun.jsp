@@ -7,19 +7,28 @@
 	<title>쇼핑몰 관리자 홈페이지</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<link href="${pageContext.servletContext.contextPath }/assets/css/font.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery-1.9.0.js">
+</script>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/admin/jumun/jumun.js">
+</script>
+
+
 </head>
 <body bgcolor="white" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <br>
 <jsp:include page="/WEB-INF/views/include/admin-menu.jsp"/>
 <hr width='900' size='3'>
-<form name="form1" method="get" action="">
+<form id="jumun-search" name="form1" method="post" action="${pageContext.servletContext.contextPath }/admin/jumun">
+<input id="nowPage" type="hidden" name="nowPage" value="${pb.nowPage }">
+<input id="day1" type="hidden" name="day1" value="">
+<input id="day2" type="hidden" name="day2" value="">
 <table width="800" border="0" cellspacing="0" cellpadding="0">
 	<tr height="40">
-		<td align="left"  width="100" valign="bottom">&nbsp 주문수 : <font color="#FF0000">20</font></td>
+		<td align="left"  width="100" valign="bottom">&nbsp 주문수 : <font color="#FF0000">${totalCount }</font></td>
 		<td align="right" width="650" valign="bottom">
 			기간 : 
-			<input type="text" name="day1_y" size="4" value="2008">
-			<select name="day1_m">
+			<input data-day1="${pb.opt.day1 }" id="day1_y" type="text" name="day1_y" size="4" value="2008" maxlength="4" placeholder="년도" >
+			<select id="day1_m" name="day1_m">
 				<option value="01" selected>1</option>
 				<option value="02">2</option>
 				<option value="03">3</option>
@@ -33,7 +42,7 @@
 				<option value="11">11</option>
 				<option value="12">12</option>
 			</select>
-			<select name="day1_d">
+			<select id="day1_d" name="day1_d">
 				<option value="01" selected>1</option>
 				<option value="02">2</option>
 				<option value="03">3</option>
@@ -65,9 +74,10 @@
 				<option value="29">29</option>
 				<option value="30">30</option>
 				<option value="31">31</option>
-			</select> - 
-			<input type="text" name="day2_y" size="4" value="2008">
-			<select name="day2_m">
+			</select> 
+			
+			<input data-day2="${pb.opt.day2 }" id="day2_y" type="text" name="day2_y" size="4" value="2018" maxlength="4" placeholder="년도">
+			<select id="day2_m"  name="day2_m">
 				<option value="01" selected>1</option>
 				<option value="02">2</option>
 				<option value="03">3</option>
@@ -81,7 +91,7 @@
 				<option value="11">11</option>
 				<option value="12">12</option>
 			</select>
-			<select name="day2_d">
+			<select id="day2_d" name="day2_d">
 				<option value="01" selected>1</option>
 				<option value="02">2</option>
 				<option value="03">3</option>
@@ -113,25 +123,25 @@
 				<option value="29">29</option>
 				<option value="30">30</option>
 				<option value="31">31</option>
-			</select> &nbsp
+			</select> &nbsp;
 			<select name="sel1">
 				<option value="0" selected>전체</option>
-				<option value="1">주문신청</option>
-				<option value="2">주문확인</option>
-				<option value="3">입금확인</option>
-				<option value="4">배달중</option>
-				<option value="5">주문완료</option>
-				<option value="6">주문취소</option>
-			</select> &nbsp 
+				<option value="jumun">주문신청</option>
+				<option value="jumunOk">주문확인</option>
+				<option value="depositOk">입금확인</option>
+				<option value="delivery">배달중</option>
+				<option value="complete">배달완료</option>
+				<option value="jumunCancel">주문취소</option>
+			</select> &nbsp; 
 			<select name="sel2">
-				<option value="1">주문번호</option>
-				<option value="2">고객명</option>
-				<option value="3">상품명</option>
+				<option value="jumunNo">주문번호</option>
+				<option value="customerName">고객명</option>
+				<option value="productName">상품명</option>
 			</select>
-			<input type="text" name="text1" size="10" value="">&nbsp
+			<input type="text" name="keyword" size="10" value="">&nbsp;
 		</td>
 		<td align="left" width="50" height="50" valign="bottom">
-			<input type="button" value="검색"> &nbsp;
+			<input type="submit" value="검색"> &nbsp;
 		</td>
 	</tr>
 	<tr><td height="5"></td></tr>
@@ -150,91 +160,66 @@
     <td width="135" align="center">주문상태</td>
     <td width="50"  align="center">삭제</td>
 	</tr>
-	<tr bgcolor="#F2F2F2" height="23">
-		<form method="post" action=""> 
-		<td width="70"  align="center"><a href="jumun_info.jsp?no=0803050004">0803050004</a></td>
-		<td width="70"  align="center">2008-03-05</td>
-		<td width="250" align="left">&nbsp;파란 브라우스 외 1</td>	
-		<td width="40" align="center">2</td>	
-		<td width="70"  align="right">35,000&nbsp</td>	
-		<td width="65"  align="center">홍길동</td>	
-		<td width="50"  align="center">카드</td>	
-		<td width="135" align="center" valign="bottom">
-			<select name="state" style="font-size:9pt; color:black">
-				<option value="1" selected>주문신청</option>
-				<option value="2">주문확인</option>
-				<option value="3">입금확인</option>
-				<option value="4">배송중</option>
-				<option value="5">주문완료</option>
-				<option value="6">주문취소</option>
-			</select>&nbsp;
-			<input type="image" src="${pageContext.servletContext.contextPath }/assets/images/admin/b_edit1.gif" border="0">
-		</td>	
-		<td width="50" align="center" valign="bottom">
-			<a href=""><img src="${pageContext.servletContext.contextPath }/assets/images/admin/b_delete1.gif" border="0"></a>
-		</td>
-		</form>
-	</tr>
-	<tr bgcolor="#F2F2F2" height="23">
-		<form method="post" action="">  
-		<td width="70"  align="center"><a href="jumun_info.jsp?no=0803030002">0803030002</a></td>
-		<td width="70"  align="center">2008-03-03</td>
-		<td width="250" align="left">&nbsp;실크 브라우스</td>	
-		<td width="40" align="center">1</td>	
-		<td width="70"  align="right">120,000&nbsp</td>	
-		<td width="65"  align="center">이길동</td>	
-		<td width="50"  align="center">무통장</td>	
-		<td width="135" align="center" valign="bottom">
-			<select name="state" style="font-size:9pt; color:blue">
-				<option value="1">주문신청</option>
-				<option value="2">주문확인</option>
-				<option value="3">입금확인</option>
-				<option value="4">배송중</option>
-				<option value="5" selected>주문완료</option>
-				<option value="6">주문취소</option>
-			</select>&nbsp;
-			<input type="image" src="${pageContext.servletContext.contextPath }/assets/images/admin/b_edit1.gif" border="0">
-		</td>	
-		<td width="50" align="center" valign="bottom">
-			<a href=""><img src="${pageContext.servletContext.contextPath }/assets/images/admin/b_delete1.gif" border="0"></a>
-		</td>
-		</form>
-	</tr>
-	<tr bgcolor="#F2F2F2" height="23">
-		<form method="post" action="">   
-		<td width="70"  align="center"><a href="jumun_info.jsp?no=0803010006">0803010006</a></td>
-		<td width="70"  align="center">2008-03-01</td>
-		<td width="250" align="left">&nbsp;하얀 브라우스</td>	
-		<td width="40" align="center">1</td>	
-		<td width="70"  align="right">155,000&nbsp</td>	
-		<td width="65"  align="center">김미자</td>	
-		<td width="50"  align="center">카드</td>	
-		<td width="135" align="center" valign="bottom">
-			<select name="state" style="font-size:9pt; color:red">
-				<option value="1">주문신청</option>
-				<option value="2">주문확인</option>
-				<option value="3">입금확인</option>
-				<option value="4">배송중</option>
-				<option value="5">주문완료</option>
-				<option value="6"selected>주문취소</option>
-			</select>&nbsp;
-			<input type="image" src="${pageContext.servletContext.contextPath }/assets/images/admin/b_edit1.gif" border="0">
-		</td>	
-		<td width="50" align="center" valign="bottom">
-			<a href=""><img src="${pageContext.servletContext.contextPath }/assets/images/admin/b_delete1.gif" border="0"></a>
-		</td>
-		</form>
-	</tr>
+	
+	<c:forEach items="${jumunList }" var="l" varStatus="status">
+		<tr bgcolor="#F2F2F2" height="23">
+			<form class="form-modify" method="post" action="${pageContext.servletContext.contextPath }/admin/jumun/modify_state"> 
+			<td width="70"  align="center"><a href="jumun_info.jsp?no=0803050004">${l.no }</a></td>
+			<td width="70"  align="center">${l.date }</td>
+			<td width="250" align="left">&nbsp;${l.productName }&nbsp; (외${l.count-1 }) </td>	
+			<td width="40" align="center">${l.count }</td>	
+			<td width="70"  align="right"><fmt:formatNumber value="${l.totalPrice }" type="number"/>&nbsp;</td>	
+			<td width="65"  align="center">${l.userName }</td>	
+			<td width="50"  align="center">${l.paymentOption }</td>	
+			<td width="135" align="center" valign="bottom">
+				<select class="select-state" data-state="${l.state }" name="state" style="font-size:9pt; color:black">
+					<option value="1">주문신청</option>
+					<option value="2">주문확인</option>
+					<option value="3">입금확인</option>
+					<option value="4">배송중</option>
+					<option value="5">주문완료</option>
+					<option value="6">주문취소</option>
+				</select>&nbsp;
+				<input name="jumun-no" type="hidden" value="${l.no }">
+				<input name="modify-state" type="hidden" value="">
+				<input class="modify-state" type="image" src="${pageContext.servletContext.contextPath }/assets/images/admin/b_edit1.gif" border="0">
+			</td>	
+			
+			<td width="50" align="center" valign="bottom">
+				<a href=""><img src="${pageContext.servletContext.contextPath }/assets/images/admin/b_delete1.gif" border="0"></a>
+			</td>
+			</form>
+		</tr>
+	</c:forEach>
+
 </table>
 <br>
 <table width="800" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td height="30" class="cmfont" align="center">
-			<img src="${pageContext.servletContext.contextPath }/assets/images/admin/i_prev.gif" align="absmiddle" border="0"> 
-			<font color="#FC0504"><b>1</b></font>&nbsp;
-			<a href="jumun.jsp?page=2&sel1=&sel2=&text1=&day1_y=&day1_m=&day1_d=&day2_y=&day2_m=&day2_d="><font color="#7C7A77">[2]</font></a>&nbsp;
-			<a href="jumun.jsp?page=3&sel1=&sel2=&text1=&day1_y=&day1_m=&day1_d=&day2_y=&day2_m=&day2_d="><font color="#7C7A77">[3]</font></a>&nbsp;
-			<img src="${pageContext.servletContext.contextPath }/assets/images/admin/i_next.gif" align="absmiddle" border="0">
+			<c:if test="${pb.previousPageGroup }">
+				<a href="${pageContext.servletContext.contextPath }/admin/jumun?nowPage=${pb.startPage-1}&keyword=${pb.opt.keyword}&day1=${pb.opt.day1}&day2=${pb.opt.day2}&sel1=${pb.opt.sel1}&sel2=${pb.opt.sel2}">
+					<img src="${pageContext.servletContext.contextPath }/assets/images/admin/i_prev.gif" align="absmiddle" border="0">
+				</a>&nbsp;
+			</c:if>
+			
+			<c:forEach var="i" begin="${pb.startPage }" end="${pb.endPage }">
+				<c:choose>
+					<c:when test="${pb.nowPage eq i }">
+						<font color="#FC0504"><b>${i }</b></font>&nbsp;
+					</c:when>
+					<c:when test="${pb.nowPage ne i }">
+						<a href="${pageContext.servletContext.contextPath }/admin/jumun?nowPage=${i}&keyword=${pb.opt.keyword}&day1=${pb.opt.day1}&day2=${pb.opt.day2}&sel1=${pb.opt.sel1}&sel2=${pb.opt.sel2}">
+						<font color="#7C7A77">[${i }]</font></a>&nbsp;
+					</c:when>
+				</c:choose>
+			</c:forEach>	
+					
+			<c:if test="${pb.nextPageGroup }">
+				<a href="${pageContext.servletContext.contextPath }/admin/jumun?nowPage=${pb.endPage+1}&keyword=${pb.opt.keyword}&day1=${pb.opt.day1}&day2=${pb.opt.day2}&sel1=${pb.opt.sel1}&sel2=${pb.opt.sel2}">
+					<img src="${pageContext.servletContext.contextPath }/assets/images/admin/i_next.gif" align="absmiddle" border="0">
+				</a>&nbsp;
+			</c:if>
 		</td>
 	</tr>
 </table>

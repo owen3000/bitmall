@@ -125,7 +125,7 @@
 								</td>
 								<td width="1" bgcolor="E8E7EA"></td>
 								<td style="padding-left:10px">
-									<input id="num" type="text" name="num" value="1" size="3" maxlength="5" class="cmfont1"> <font color="666666">개</font>
+									<input id="num" type="text" name="num" value="1" size="3" maxlength="2" class="cmfont1"> <font color="666666">개</font>
 								</td>
 							</tr>
 							<tr><td colspan="3" bgcolor="E8E7EA"></td></tr>

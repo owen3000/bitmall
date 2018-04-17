@@ -15,8 +15,8 @@ public class ProductDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List<HashMap<String, Object>> select() {
-		return sqlSession.selectList("product.select");
+	public List<HashMap<String, Object>> selectList(Long categoryNo) {
+		return sqlSession.selectList("product.select",categoryNo);
 	}
 	
 	public ProductVO select(Long no) {

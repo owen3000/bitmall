@@ -30,6 +30,7 @@
 		<mapper resource="mybatis/mappers/cart.xml" />
 		<mapper resource="mybatis/mappers/order.xml" />
 		<mapper resource="mybatis/mappers/jumun.xml" />
+		<mapper resource="mybatis/mappers/category.xml" />
 
 		<mapper resource="mybatis/mappers/admin_user.xml" />
 		<mapper resource="mybatis/mappers/admin_opt.xml" />
@@ -38,6 +39,7 @@
 		<mapper resource="mybatis/mappers/admin_event.xml" />
 		<mapper resource="mybatis/mappers/admin_product.xml" />
 		<mapper resource="mybatis/mappers/admin_image.xml" />
+		<mapper resource="mybatis/mappers/admin_jumun.xml" />
 
 	</mappers>
 	
