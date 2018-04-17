@@ -26,5 +26,9 @@ public class JumunDAO {
 		int count = sqlSession.update("admin_jumun.update_order_state",noAndState);
 		return count == 1 ;
 	}
+	public boolean delete(Long orderNo) {
+		int count = sqlSession.delete("admin_jumun.delete_order",orderNo);
+		return count == 1 ;
+	}
 	
 }

@@ -149,4 +149,11 @@
 		   where no = #{no}
 		]]>	
 	</update>
+	
+	<delete id="delete_order" parameterType="long">
+		<![CDATA[
+		   delete from order_table 
+		   where no = #{no}
+		]]>	
+	</delete>
 </mapper>

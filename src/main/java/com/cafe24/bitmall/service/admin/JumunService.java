@@ -32,5 +32,10 @@ public class JumunService {
 		
 		return jumunDAO.update(map);
 	}
+	
+	public boolean deleteOrder(Long orderNo) {
+		
+		return jumunDAO.delete(orderNo);
+	}
 
 }

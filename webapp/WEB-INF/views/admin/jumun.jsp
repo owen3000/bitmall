@@ -193,7 +193,8 @@
 			</td>	
 			
 			<td width="50" align="center" valign="bottom">
-				<a href=""><img src="${pageContext.servletContext.contextPath }/assets/images/admin/b_delete1.gif" border="0"></a>
+				<a href="${pageContext.servletContext.contextPath }/admin/jumun/delete?jumun-no=${l.no }&nowPage=${pb.startPage-1}&keyword=${pb.opt.keyword}&day1=${pb.opt.day1}&day2=${pb.opt.day2}&sel1=${pb.opt.sel1}&sel2=${pb.opt.sel2}">
+				<img src="${pageContext.servletContext.contextPath }/assets/images/admin/b_delete1.gif" border="0"></a>
 			</td>
 			</form>
 		</tr>
