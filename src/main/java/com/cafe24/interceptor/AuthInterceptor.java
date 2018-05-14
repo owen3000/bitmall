@@ -26,8 +26,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		// servlet xml에 맵핑 된대로 /** 모든 요청에 대해 들옴(exclude제외)
 		//1. default handler 제외
 		if( (handler instanceof HandlerMethod) == false) {
-			//LOG.warn("AuthInterceptor:preHandle / if( (handler instanceof HandlerMethod) == false)");
-			System.out.println("AuthInterceptor:preHandle");
+			LOG.warn("AuthInterceptor:preHandle / if( (handler instanceof HandlerMethod) == false)");
 			return true; //디폴트 라는 얘기죠
 		}
 		
