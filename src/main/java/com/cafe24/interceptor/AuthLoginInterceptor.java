@@ -24,7 +24,7 @@ public class AuthLoginInterceptor extends HandlerInterceptorAdapter {
 		WebApplicationContextUtils.getWebApplicationContext(request.getServletContext());
 		UserService userService =
 				wac.getBean(UserService.class);
-		
+		System.out.println(userService);
 		UserVO vo = new UserVO();
 		vo.setId(id);
 		vo.setPassword(password);
