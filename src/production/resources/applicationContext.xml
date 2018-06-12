@@ -33,7 +33,7 @@
 	<!-- Connection Pool DataSource -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://192.168.1.63:3306/bitmall" />
+		<property name="url" value="jdbc:mysql://192.168.1.104:3306/bitmall" />
 		<property name="username" value="bitmall" />
 		<property name="password" value="bitmall" />
 	</bean>
